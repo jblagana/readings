@@ -37,6 +37,12 @@ nav_exclude: true
     <p>Master the fundamentals, run and <em>modify</em> the CUDA kernels, then use the review and roadmap to pick one of five research directions.</p>
     <span class="path-link">01 &rarr; cuda_kernels &rarr; 03 &rarr; 06</span>
   </a>
+  <a class="path-card" href="papers.html">
+    <span class="path-tag">Interactive &middot; 41 slides</span>
+    <h3>Explore the paper deck</h3>
+    <p>Step through all 41 DOI-backed papers one at a time &mdash; each with a hook question, a summary, its contribution, and how it is cited. Keyboard-friendly and deep-linkable, with an overview to jump around.</p>
+    <span class="path-link">Papers &rarr;</span>
+  </a>
 </div>
 
 ## The six sections
@@ -78,6 +84,7 @@ nav_exclude: true
 
 <div class="artifact-row">
   <a class="artifact" href="papers_scopus_table.csv"><span class="artifact-ico" aria-hidden="true">📊</span> Paper table (CSV)</a>
+  <a class="artifact" href="papers.html"><span class="artifact-ico" aria-hidden="true">🎞️</span> Paper deck (41 slides)</a>
   <a class="artifact" href="cuda_kernels/"><span class="artifact-ico" aria-hidden="true">⚡</span> CUDA kernels &amp; benchmarks</a>
   <a class="artifact" href="00_README.html"><span class="artifact-ico" aria-hidden="true">📦</span> Package README</a>
   <a class="artifact" href="quiz.html"><span class="artifact-ico" aria-hidden="true">🎯</span> Self-generated quiz</a>

@@ -1,0 +1,433 @@
+# ---------------------------------------------------------------------------
+# Paper deck: per-paper editorial content + citation snapshot.
+#
+# This is the "content" layer of the deck (papers.md). Bibliographic metadata
+# (id, subtopic, year, title, venue, venue_type, doi, key_contribution, notes)
+# lives in _data/papers.csv, which mirrors the audit artifact
+# papers_scopus_table.csv at the repo root.
+#
+#   * Copy papers_scopus_table.csv -> _data/papers.csv when you update the table.
+#   * Re-run `python3 tools/fetch_citations.py` to refresh `citations` and
+#     `authors`. Provenance for the snapshot: tools/citations_snapshot.json.
+#
+# `citations` is OpenAlex `cited_by_count` - a point-in-time snapshot
+# (meta.cited_asof), NOT a live count. Keep strings plain text (no markdown,
+# no HTML): they are rendered as escaped text in the slides.
+# ---------------------------------------------------------------------------
+
+meta:
+  cited_asof: "2026-09-08"
+  citations_source: "OpenAlex (api.openalex.org, cited_by_count)"
+  total: 41
+
+slides:
+  A01:
+    citations: 37
+    authors: "Chunhui Guo et al."
+    hook: "Did GPUs actually speed up power flow in 2012 - and against which CPU baseline?"
+    summary: "The first systematic GPU-versus-CPU head-to-head on parallel power-flow solvers. It establishes that the speedup is real and repeatable for the inner linear solve."
+    interesting:
+      - "Opened the GPU power-flow line this deck traces (A01-A16, 2012-2024)."
+      - "Reports per-iteration time; the modern caveat is that total wall time - factorization plus data transfer - is the number that decides deployment."
+      - "The inner solve is bandwidth-bound, not FLOP-bound, which is the reason this line kept winning."
+    highlight: "The paper that started the GPU power-flow literature."
+  A02:
+    citations: 22
+    authors: "Dino Ablakovic et al."
+    hook: "Does the GPU win on distribution grids, not just big transmission cases?"
+    summary: "Pushes GPU power flow to the distribution side: radial, three-phase - the networks utilities actually operate at the edge."
+    interesting:
+      - "One of the first distribution-level (not transmission) GPU power-flow studies."
+      - "Radial three-phase topology is the standard distribution shape."
+      - "Sets up the later distribution and DERMS OPF line (B05, B08 and the D subtopic)."
+    highlight: "Distribution-scale, three-phase, radial - the real edge of the grid."
+  A03:
+    citations: 21
+    authors: "Xue Li et al."
+    hook: "Can you put a direct (multifrontal) factorization on the GPU for power flow?"
+    summary: "Takes the direct (multifrontal) factorization route onto the GPU, posing the subtopic's central architectural question: iterative versus direct on a GPU."
+    interesting:
+      - "Frames the iterative-versus-direct debate that defines GPU power flow."
+      - "Direct methods bring irregular sparsity and fill-in, which are hard to map to a GPU."
+      - "The iterative side won by default; A03 is the direct-method reference point."
+    highlight: "Poses the iterative-versus-direct question the whole subtopic answers."
+  A04:
+    citations: 48
+    authors: "Xue Li et al."
+    hook: "How do you make an iterative GPU power flow converge faster?"
+    summary: "Iterative power flow on the GPU with a Chebyshev preconditioner driving conjugate gradients. This is where the preconditioner phase begins."
+    interesting:
+      - "Part of the 2014-2017 preconditioner phase of the subtopic."
+      - "Preconditioning matters as much as the hardware; the contribution is the combination."
+      - "Conjugate gradients need a good preconditioner to converge in a few iterations."
+    highlight: "Begins the preconditioner era of GPU power flow."
+  A05:
+    citations: 11
+    authors: "Xue Li et al."
+    hook: "Can a two-step preconditioner beat the single-step version on the GPU?"
+    summary: "Refines the conjugate-gradient approach with two-step preconditioning on the GPU, shaving more iterations off the convergence."
+    interesting:
+      - "Direct successor to A04 - same conjugate-gradient idea, a better preconditioner."
+      - "Fewer iterations times per-iteration GPU speed is the compound win."
+      - "A conference step in the iterative-preconditioning line."
+    highlight: "Two-step preconditioning - the iterative method refined."
+  A06:
+    citations: 82
+    authors: "Xue Li et al."
+    hook: "What does GPU fast-decoupled power flow look like at flagship-journal quality?"
+    summary: "The subtopic's flagship journal entry: fast-decoupled LF on the GPU with a preconditioned iterative solver and an inexact Newton method."
+    interesting:
+      - "The anchor journal paper for subtopic A (IEEE Transactions on Power Systems)."
+      - "Combines FDLF plus preconditioning plus inexact Newton - the combination is the contribution."
+      - "The most cited A-paper here (82), a useful reference for what a mature GPU power flow means."
+    highlight: "The flagship journal result for GPU power flow."
+  A07:
+    citations: 29
+    authors: "Morad Abdelaziz"
+    hook: "Do you have to use CUDA to get the GPU win?"
+    summary: "Monte-Carlo probabilistic power flow accelerated with OpenCL - the vendor-neutral route, showing CUDA is not the only door."
+    interesting:
+      - "Shows the non-CUDA route (OpenCL) is viable for probabilistic power flow."
+      - "Monte-Carlo probabilistic power flow is embarrassingly parallel, a natural GPU fit."
+      - "A counterpoint worth quoting: the method, not the vendor API, carries the speedup."
+    highlight: "Proof you do not need CUDA - OpenCL does probabilistic power flow too."
+  A08:
+    citations: 12
+    authors: "Shengjun Huang et al."
+    hook: "On the GPU, is the direct solver finally competitive with iterative for fast-decoupled power flow?"
+    summary: "A head-to-head performance analysis of a direct linear solver versus iterative methods for GPU fast-decoupled power flow."
+    interesting:
+      - "The direct-versus-iterative question, applied to fast-decoupled power flow specifically."
+      - "A calibration paper (performance analysis), not a new method."
+      - "Feeds the overall conclusion that iterative won by default."
+    highlight: "Direct versus iterative for GPU fast-decoupled power flow, measured."
+  A09:
+    citations: 27
+    authors: "Gan Zhou et al."
+    hook: "Can you solve hundreds of power flows at once instead of one at a time?"
+    summary: "Batched sparse LU on the GPU: many independent power flows in a single solve. This is the ancestor of the concurrency idea that now dominates OPF."
+    interesting:
+      - "The template for N-1 and scenario parallelism (echoed in B07 and the E gap)."
+      - "GPU memory becomes the scenario warehouse: one card holds thousands of instances."
+      - "The batch-of-independent-solves pattern is the core GPU insight this whole package builds on."
+    highlight: "The batched-LU ancestor of N-1 and scenario parallelism."
+  A10:
+    citations: 24
+    authors: "Igor Araújo et al."
+    hook: "What is the cleanest hybrid CPU-plus-GPU way to run many power flows?"
+    summary: "A hybrid CPU-GPU approach for running simultaneous parallel power-flow calculations, balancing the work split across the two devices."
+    interesting:
+      - "Part of the 2018-present consolidation phase of the subtopic."
+      - "Hybrid CPU-GPU partitioning - a design question that recurs in OPF and UC."
+      - "Which part runs on the card and which on the CPU is a systems contribution, not just a kernel one."
+    highlight: "Hybrid CPU plus GPU batched power flow."
+  A11:
+    citations: 39
+    authors: "Xueneng Su et al."
+    hook: "Can you parallelize the entire Newton power flow, not just the inner solve?"
+    summary: "A full Newton power flow parallelized across GPU and CPU with vectorization and sparse techniques - the whole pipeline, not just one step."
+    interesting:
+      - "Full-Newton (not just the linear solve) parallelization, in IEEE Transactions on Smart Grid."
+      - "Uses vectorization and sparsity to keep the GPU fed."
+      - "Represents the full-pipeline-on-GPU end of the subtopic."
+    highlight: "The full Newton pipeline, parallelized GPU plus CPU."
+  A12:
+    citations: 25
+    authors: "Dong-Hee Yoon et al."
+    hook: "What does the whole GPU power-flow literature look like, mapped out?"
+    summary: "The subtopic-A review: it maps the parallel power-flow field with a GPU focus. The best single starting point for citation snowballing."
+    interesting:
+      - "The map of subtopic A - use it to find more papers."
+      - "Review-grade: great for related work, not a source of speedup numbers."
+      - "Pairs with S01 and S02 as the survey layer of this package."
+    highlight: "The subtopic-A review - your snowballing map."
+  A13:
+    citations: 22
+    authors: "Lei Zeng et al."
+    hook: "What does a sparse, modified-Newton GPU power flow buy you?"
+    summary: "Sparse GPU power flow using a modified Newton method, tuned for sparsity on the device."
+    interesting:
+      - "Post-2018 consolidation: a sparse modified-Newton refinement."
+      - "Published in IEEE Access - open access, so easy to audit."
+      - "Sparse structure is what makes the inner solve SpMV-shaped and GPU-friendly."
+    highlight: "Sparse modified-Newton power flow on the GPU."
+  A14:
+    citations: 3
+    authors: "Taha Saeed Khan et al."
+    hook: "At the implementation level, where does CPU-plus-GPU power flow actually spend its time?"
+    summary: "An implementation-level analysis of the Newton-Raphson power flow on CPU plus GPU: where the time and the data transfers really go."
+    interesting:
+      - "Implementation analysis, not a new algorithm."
+      - "Conference-level with limited reproducibility detail - grade it accordingly."
+      - "Reinforces the launch- and transfer-overhead story the 5-bus kernel demonstrates."
+    highlight: "Implementation-level CPU-plus-GPU Newton-Raphson analysis."
+  A15:
+    citations: 0
+    authors: "Haowei Li et al."
+    hook: "Does the polar-form power flow also speed up on the GPU?"
+    summary: "GPU acceleration of the polar-form power flow calculation - the classic angle-and-magnitude formulation on the device."
+    interesting:
+      - "One of the 2024 conference entries, with limited reproducibility detail."
+      - "Polar form (angle and magnitude) is the classic Newton-Raphson power-flow variable set."
+      - "Shows the method spreading to more formulations as GPUs become the default."
+    highlight: "Polar-form power flow, GPU-accelerated."
+  A16:
+    citations: 0
+    authors: "Sipeng Luo et al."
+    hook: "In 2024, is GPU power flow simply the new default?"
+    summary: "A 2024 Energy-Internet-conference study of GPU-accelerated power flow analysis - the field's steady stream reaching the smart-grid edge."
+    interesting:
+      - "Latest in the 2021-2024 conference-level refinements."
+      - "Presented at an Energy Internet venue - power flow meeting the smart-grid context."
+      - "By 2024 the GPU is assumed; the frontier has moved on to OPF and SCOPF."
+    highlight: "The 2024 steady stream: GPU power flow at the smart-grid edge."
+  S01:
+    citations: 19
+    authors: "Siddhartha Kumar Khaitan"
+    hook: "Where, across all of power systems, has high-performance computing actually been applied?"
+    summary: "The anchor HPC-for-power-systems survey. This is the place to start forward and backward citation snowballing for the whole package."
+    interesting:
+      - "Anchor survey: start citation snowballing here."
+      - "Covers HPC broadly, not just GPUs, so it frames the wider context for this deck."
+      - "Pairs with S02 as the survey layer of the package."
+    highlight: "Your snowballing starting point for HPC in power systems."
+  S02:
+    citations: 1288
+    authors: "Daniel K. Molzahn et al."
+    hook: "What do distributed optimization and control algorithms (ADMM and kin) give power systems?"
+    summary: "The anchor survey of distributed optimization and control for power systems - the theoretical bedrock for DERMS and distributed OPF."
+    interesting:
+      - "By far the most cited paper in this deck (1,288 citations on OpenAlex)."
+      - "ADMM and primal-dual are exactly the algorithm family D04 and D05 analyze."
+      - "IEEE Transactions on Smart Grid - a strong venue, useful as a related-work anchor."
+    highlight: "The ADMM and distributed-optimization anchor - and the deck's citation record."
+  B01:
+    citations: 20
+    authors: "Logan Rakai et al."
+    hook: "In 2014, could you even solve an optimal power flow on a GPU?"
+    summary: "Early GPU OPF work - the can-you moment for the subtopic, long before the modern condensed-Newton and interior-point generation."
+    interesting:
+      - "The 2014 origin of GPU OPF."
+      - "Predates the modern techniques; it belongs to the can-you phase."
+      - "The center of gravity since has moved to which formulation survives on one card."
+    highlight: "The first can-you-do-OPF-on-a-GPU paper."
+  B02:
+    citations: 25
+    authors: "Guangchao Geng et al."
+    hook: "What happens when OPF must respect transient stability, and can a GPU coprocessor help?"
+    summary: "Transient-stability-constrained OPF (TSC-OPF) with the GPU used as a coprocessor, adding the dynamic constraint to the optimization."
+    interesting:
+      - "Adds transient-stability constraints to OPF (TSC-OPF)."
+      - "GPU as coprocessor - an early hybrid framing."
+      - "IEEE Transactions on Smart Grid; bridges static OPF and dynamic constraints."
+    highlight: "OPF with transient-stability constraints, GPU as coprocessor."
+  B03:
+    citations: 1
+    authors: "Youngdae Kim et al."
+    hook: "Can you not just solve AC-OPF on a GPU but track its solution as the grid changes?"
+    summary: "GPU-accelerated AC-OPF computation plus solution tracking via condensed Newton - following the OPF optimum as operating conditions move."
+    interesting:
+      - "Condensed-Newton formulation: per-iteration kernels are SpMV-shaped and parallel."
+      - "Solution tracking is more than a one-shot solve - it follows the moving optimum."
+      - "Preprint-first on arXiv; the ACM version is the peer-reviewed DOI (10.1145/3547276.3548631)."
+    highlight: "Condensed Newton plus solution tracking on the GPU."
+  B04:
+    citations: 14
+    authors: "Kasia Świrydowicz et al."
+    hook: "Can you kill the biggest serial bottleneck of CPU OPF by doing the factorization on the GPU?"
+    summary: "GPU-resident sparse direct solvers for the interior-point (IPM) linear systems of AC-OPF, removing the single biggest serial bottleneck of CPU OPF."
+    interesting:
+      - "A key 2020s OPF result: direct solvers, resident on the GPU."
+      - "The direct successor of the A03/A09 power-flow lesson, one level up the stack."
+      - "IPM solves a sequence of sparse symmetric systems; the factorization is the bottleneck."
+    highlight: "GPU-resident direct solvers for IPM - the 2020s OPF breakthrough."
+  B05:
+    citations: 0
+    authors: "Minseok Ryu et al."
+    hook: "Can you batch a distributed (ADMM-style) OPF algorithm across a GPU for distribution systems?"
+    summary: "A GPU-based distributed algorithm for linearized OPF in distribution systems - bringing the distribution and DERMS side toward the GPU."
+    interesting:
+      - "Distributed (ADMM-style) linearized OPF for distribution, batched on the GPU."
+      - "Preprint-first (arXiv 2310.09410) - check the peer-reviewed version before citing."
+      - "One of the two distribution-OPF papers (with B08) the DERMS gap is built on."
+    highlight: "Distributed linearized OPF for distribution, on the GPU."
+  B06:
+    citations: 30
+    authors: "Sungho Shin et al."
+    hook: "How do you represent a nonlinear program as data so the GPU can grind through it?"
+    summary: "A SIMD abstraction of nonlinear programs for GPU OPF with condensed Newton - the best single entry for how to map an NLP onto GPU memory."
+    interesting:
+      - "Treats the NLP structure as data (SIMD abstraction): match the kernel to the hardware."
+      - "Condensed-Newton per-iteration kernels are SpMV-shaped."
+      - "An SSRN preprint also exists; the Electric Power Systems Research version is the journal one."
+    highlight: "The best entry for how to map an NLP onto the GPU."
+  B07:
+    citations: 3
+    authors: "Sungho Shin et al."
+    hook: "Can one big-memory GPU hold an entire multi-period AC-OPF?"
+    summary: "Multi-period AC-OPF on high-memory GPUs, using 40 to 80 GB of HBM to hold many time and scenario instances at once."
+    interesting:
+      - "Memory capacity, not FLOPs, is the reason GPUs entered OPF at all."
+      - "Multi-period is the scenario-warehouse pattern (cf. A09 and the E gap)."
+      - "2024 - too new for independent replications; verify any speedup per paper."
+    highlight: "One card holds the whole multi-period AC-OPF batch."
+  B08:
+    citations: 0
+    authors: "Minseok Ryu et al."
+    hook: "In 2025, is distributed OPF for distribution systems ready to run on the GPU?"
+    summary: "A GPU-accelerated distributed OPF algorithm for distribution systems - the newest step in the distribution and DERMS OPF line."
+    interesting:
+      - "IEEE IPDPS 2025 - a strong parallel-computing venue."
+      - "The distribution-side OPF companion to B05."
+      - "An arXiv version also exists (2501.08293)."
+    highlight: "Newest distributed OPF for distribution, GPU-accelerated."
+  B09:
+    citations: 1
+    authors: "Anthony Degleris et al."
+    hook: "Is security-constrained OPF (N-1) now a first-class GPU target?"
+    summary: "GPU SCOPF - representative of the active 2024-2026 line making security-constrained OPF a first-class GPU problem."
+    interesting:
+      - "Marks SCOPF as a first-class GPU target (convex or Lagrangian outer on CPU, parallel inner on GPU)."
+      - "SCOPF at transmission scale with N-1 and 10k-plus buses on one card is where results get thin."
+      - "Two preprints also exist (an arXiv and a Research Square preprint)."
+    highlight: "SCOPF (N-1) becomes a first-class GPU target."
+  B10:
+    citations: 0
+    authors: "François Pacaud et al."
+    hook: "Can an augmented Lagrangian method make security-constrained AC-OPF tractable on the GPU?"
+    summary: "An augmented Lagrangian method for security-constrained AC-OPF on the GPU - a Lagrangian route into the security-constrained version."
+    interesting:
+      - "A Lagrangian formulation - relax or penalize, then solve in parallel."
+      - "Electric Power Systems Research 2026; Crossref online-first lists 2027 (verify the final volume)."
+      - "Completes the B-arc from can-you (2014) to which-formulation-survives (2026)."
+    highlight: "Augmented Lagrangian security-constrained AC-OPF on the GPU."
+  C01:
+    citations: 0
+    authors: "Weiqi Zhang et al."
+    hook: "How does a MILP unit-commitment outer loop coexist with a GPU inner solver?"
+    summary: "Unit commitment coupled with AC-OPF, solved on the GPU - the formulation question at the heart of the emerging GPU-UC line."
+    interesting:
+      - "The formulation question: a MILP outer loop plus a GPU inner AC-OPF solver."
+      - "Preprint-only (arXiv 2310.13145) - verify before citing."
+      - "The GPU takes the convex interior; the integer core stays on branch-and-bound."
+    highlight: "UC plus AC-OPF on the GPU - the formulation question."
+  C02:
+    citations: 0
+    authors: "Hussein Sharadga et al."
+    hook: "Where in unit commitment does the GPU actually help - the integers, or the relaxations?"
+    summary: "Scalable UC via relaxation, tightening, and GPU-based solvers - the GPU accelerates the LP and relaxation steps, not the integer decisions."
+    interesting:
+      - "The GPU accelerates the relaxation and LP steps of a branch-and-bound or Benders scheme."
+      - "Conference-level with limited detail in the metadata."
+      - "Read it like subtopic B: GPU on the convex interior, combinatorial core on the CPU."
+    highlight: "The GPU on the LP and relaxation steps of unit commitment."
+  C03:
+    citations: 0
+    authors: "Hussein Sharadga et al."
+    hook: "Can you build a GPU optimization solver aimed straight at large-scale unit commitment?"
+    summary: "A GPU-accelerated optimization solver for unit commitment on large grids - the solver-layer framing of GPU-UC."
+    interesting:
+      - "The solver-layer framing, versus C01's formulation or C02's relaxation focus."
+      - "Only three GPU-UC works in three years (two of them 2025/2026) - the first-mover window is open."
+      - "Market-clearing time limits (seconds) make the CPU-GPU partition a real design variable."
+    highlight: "A GPU solver aimed straight at large-scale unit commitment."
+  D01:
+    citations: 50
+    authors: "Luka Strezkoski et al."
+    hook: "What exactly is DERMS, and what does it still need to be a real thing?"
+    summary: "The anchor DERMS survey defining the problem space and the how-to-move-forward agenda - the document to quote when framing why DERMS matters."
+    interesting:
+      - "Defines DERMS and its agenda: real-time optimization across many DERs, sub-second to seconds, distribution scale."
+      - "No GPU core - use it to frame the DERMS niche."
+      - "A high-visibility WIREs survey; a credibility anchor for the whole D subtopic."
+    highlight: "The DERMS problem definition - your framing anchor."
+  D02:
+    citations: 14
+    authors: "Imran Rahman et al."
+    hook: "What is a concrete, utility-shaped DERMS objective a solver must actually hit?"
+    summary: "A working DERMS for feeder voltage management - the kind of concrete utility objective (voltage, losses, DER output) a GPU solver must target."
+    interesting:
+      - "A concrete utility-shaped objective: feeder voltage management."
+      - "Defines the target shapes for any GPU DERMS optimizer: voltage, losses, DER output."
+      - "IEEE ISGT 2021 - a distribution and grid-technologies venue."
+    highlight: "A real DERMS objective: feeder voltage management."
+  D03:
+    citations: 22
+    authors: "Marija Ilić et al."
+    hook: "Is DERMS performance limited by messaging, not by math?"
+    summary: "The protocol and communication layer for DERMS - establishing that DERMS performance is often bounded by communication, not computation."
+    interesting:
+      - "The communication and protocol layer of DERMS."
+      - "In most field deployments, messaging - not math - bounds DERMS performance."
+      - "Sets up the communication-is-the-bottleneck argument that D04 and D05 quantify."
+    highlight: "DERMS is bounded by messaging, not math."
+  D04:
+    citations: 2
+    authors: "Joshua Comden et al."
+    hook: "How much does communication cost a primal-dual (ADMM) DERMS?"
+    summary: "Communication-overhead analysis for primal-dual (ADMM-family) DERMS - quantifying the round-trip cost a GPU-batched solver would have to beat."
+    interesting:
+      - "One of the two most GPU-relevant DERMS papers (with D05)."
+      - "Quantifies the round-trip overhead - the latency budget a GPU path must beat."
+      - "Primal-dual / ADMM ties back to the S02 survey and the B05/B08 distributed OPF."
+    highlight: "The latency budget a GPU DERMS solver must beat."
+  D05:
+    citations: 0
+    authors: "Joshua Comden et al."
+    hook: "Where exactly does the communication load of a primal-dual DERMS concentrate?"
+    summary: "A study of the communication boundaries of primal-dual DERMS - mapping where the communication load actually concentrates."
+    interesting:
+      - "Companion to D04 - the boundary view of where communication load sits."
+      - "Gives the structure for deciding what can be batched locally on a GPU versus what must round-trip."
+      - "Primal-dual / ADMM family again - the distributed-OPF connection."
+    highlight: "Where the DERMS communication load concentrates."
+  D06:
+    citations: 2
+    authors: "Jing Wang et al."
+    hook: "Is real-time, OPF-based DERMS a live deployment goal?"
+    summary: "A real-time OPF-based DERMS implementation (a DOE/OSTI report) - evidence that OPF at real-time speeds is a live deployment target."
+    interesting:
+      - "Evidence that OPF at real-time speeds is a live deployment goal."
+      - "A DOE technical report (OSTI 2356774) - check Scopus coverage before citing."
+      - "The real-time requirement is exactly where a GPU-batched OPF earns its keep."
+    highlight: "OPF at real-time speeds - a live deployment goal."
+  D07:
+    citations: 32
+    authors: ""
+    hook: "What are the actual requirements a DERMS system must meet?"
+    summary: "The IEEE functional specification for DERMS - your requirements checklist (which services, time scales, reliability levels) for any DERMS solver."
+    interesting:
+      - "The IEEE guide is the requirements checklist for your own DERMS solver."
+      - "Defines the services, time scales, and reliability levels."
+      - "Use it to scope what a GPU DERMS optimizer should actually deliver."
+    highlight: "The DERMS requirements checklist (IEEE guide)."
+  E01:
+    citations: 3
+    authors: "Gianfranco Chicco et al."
+    hook: "How is transmission expansion planning actually solved today?"
+    summary: "A state-of-the-art treatment of metaheuristics for transmission expansion planning (TEP) - the context for what GPU work would accelerate."
+    interesting:
+      - "TEP methods state of the art, with no GPU in sight - the target for acceleration."
+      - "Metaheuristics over an operation subproblem that is itself OPF or UC."
+      - "A context paper: it defines what a GPU-TEP solver would speed up."
+    highlight: "How TEP is solved today (metaheuristics) - no GPU yet."
+  E02:
+    citations: 4
+    authors: "Reza Hemmati"
+    hook: "How does storage change the transmission expansion planning problem?"
+    summary: "Storage-aware TEP formulations - adding energy storage into the transmission expansion planning problem."
+    interesting:
+      - "The storage-aware formulation layer of TEP."
+      - "Same Springer book as E01 (the Network Design and Investment Challenge)."
+      - "Storage plus scenarios is the multi-case structure GPUs are built for."
+    highlight: "Storage-aware transmission expansion planning."
+  E03:
+    citations: 0
+    authors: "Jaeseok Choi et al."
+    hook: "What are the formal problem definitions behind transmission expansion planning?"
+    summary: "Formal TEP problem definitions (a Wiley chapter) - the mathematical setup for the planning problem a GPU solver would target."
+    interesting:
+      - "Formal TEP problem definitions (Wiley, Probabilistic Power System Expansion Planning)."
+      - "TEP is bi-level by nature: investment decisions on top of operation (OPF/UC)."
+      - "The scenario-heavy structure (hundreds to thousands of operation cases) is the GPU hook - and the gap."
+    highlight: "The formal TEP setup - the gap the whole package targets."

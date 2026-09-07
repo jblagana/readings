@@ -1,0 +1,380 @@
+{
+  "fetched_at": "2026-09-08",
+  "source": "OpenAlex (api.openalex.org /works, cited_by_count)",
+  "stats": {
+    "total": 41,
+    "ok": 41,
+    "missing": 0
+  },
+  "papers": {
+    "A01": {
+      "doi": "10.1109/rtcsa.2012.36",
+      "title": "Performance Comparisons of Parallel Power Flow Solvers on GPU System",
+      "citations": 37,
+      "authors": "Chunhui Guo et al.",
+      "oa_title": "Performance Comparisons of Parallel Power Flow Solvers on GPU System",
+      "oa_year": 2012,
+      "status": "ok"
+    },
+    "A02": {
+      "doi": "10.1109/isgteurope.2012.6465854",
+      "title": "Parallelization of radial three-phase distribution power flow using GPU",
+      "citations": 22,
+      "authors": "Dino Ablakovic et al.",
+      "oa_title": "Parallelization of radial three-phase distribution power flow using GPU",
+      "oa_year": 2012,
+      "status": "ok"
+    },
+    "A03": {
+      "doi": "10.1109/pesmg.2013.6673057",
+      "title": "Exploration of multifrontal method with GPU in power flow computation",
+      "citations": 21,
+      "authors": "Xue Li et al.",
+      "oa_title": "Exploration of multifrontal method with GPU in power flow computation",
+      "oa_year": 2013,
+      "status": "ok"
+    },
+    "A04": {
+      "doi": "10.1016/j.epsr.2014.05.005",
+      "title": "GPU-based power flow analysis with Chebyshev preconditioner and conjugate gradient method",
+      "citations": 48,
+      "authors": "Xue Li et al.",
+      "oa_title": "GPU-based power flow analysis with Chebyshev preconditioner and conjugate gradient method",
+      "oa_year": 2014,
+      "status": "ok"
+    },
+    "A05": {
+      "doi": "10.1109/pesgm.2015.7286544",
+      "title": "GPU-based two-step preconditioning for conjugate gradient method in power flow",
+      "citations": 11,
+      "authors": "Xue Li et al.",
+      "oa_title": "GPU-based two-step preconditioning for conjugate gradient method in power flow",
+      "oa_year": 2015,
+      "status": "ok"
+    },
+    "A06": {
+      "doi": "10.1109/tpwrs.2016.2618889",
+      "title": "GPU-Based Fast Decoupled Power Flow With Preconditioned Iterative Solver and Inexact Newton Method",
+      "citations": 82,
+      "authors": "Xue Li et al.",
+      "oa_title": "GPU-Based Fast Decoupled Power Flow With Preconditioned Iterative Solver and Inexact Newton Method",
+      "oa_year": 2016,
+      "status": "ok"
+    },
+    "A07": {
+      "doi": "10.1016/j.epsr.2017.02.022",
+      "title": "GPU-OpenCL accelerated probabilistic power flow analysis using Monte-Carlo simulation",
+      "citations": 29,
+      "authors": "Morad Abdelaziz",
+      "oa_title": "GPU-OpenCL accelerated probabilistic power flow analysis using Monte-Carlo simulation",
+      "oa_year": 2017,
+      "status": "ok"
+    },
+    "A08": {
+      "doi": "10.1109/epec.2017.8286158",
+      "title": "Performance analysis of GPU-accelerated fast decoupled power flow using direct linear solver",
+      "citations": 12,
+      "authors": "Shengjun Huang et al.",
+      "oa_title": "Performance analysis of GPU-accelerated fast decoupled power flow using direct linear solver",
+      "oa_year": 2017,
+      "status": "ok"
+    },
+    "A09": {
+      "doi": "10.1109/tpwrs.2017.2662322",
+      "title": "GPU-Based Batch LU-Factorization Solver for Concurrent Analysis of Massive Power Flows",
+      "citations": 27,
+      "authors": "Gan Zhou et al.",
+      "oa_title": "GPU-Based Batch LU-Factorization Solver for Concurrent Analysis of Massive Power Flows",
+      "oa_year": 2017,
+      "status": "ok"
+    },
+    "A10": {
+      "doi": "10.1016/j.ijepes.2018.08.033",
+      "title": "Simultaneous parallel power flow calculations using hybrid CPU-GPU approach",
+      "citations": 24,
+      "authors": "Igor Araújo et al.",
+      "oa_title": "Simultaneous parallel power flow calculations using hybrid CPU-GPU approach",
+      "oa_year": 2018,
+      "status": "ok"
+    },
+    "A11": {
+      "doi": "10.1109/tsg.2019.2943746",
+      "title": "Full Parallel Power Flow Solution: A GPU-CPU-Based Vectorization Parallelization and Sparse Techniques",
+      "citations": 39,
+      "authors": "Xueneng Su et al.",
+      "oa_title": "Full Parallel Power Flow Solution: A GPU-CPU-Based Vectorization Parallelization and Sparse Techniques for Newton–Raphson Implementation",
+      "oa_year": 2019,
+      "status": "ok"
+    },
+    "A12": {
+      "doi": "10.3390/en13092147",
+      "title": "Parallel Power Flow Computation Trends and Applications: A Review Focusing on GPU",
+      "citations": 25,
+      "authors": "Dong-Hee Yoon et al.",
+      "oa_title": "Parallel Power Flow Computation Trends and Applications: A Review Focusing on GPU",
+      "oa_year": 2020,
+      "status": "ok"
+    },
+    "A13": {
+      "doi": "10.1109/access.2021.3127393",
+      "title": "GPU-Based Sparse Power Flow Studies With Modified Newton's Method",
+      "citations": 22,
+      "authors": "Lei Zeng et al.",
+      "oa_title": "GPU-Based Sparse Power Flow Studies With Modified Newton’s Method",
+      "oa_year": 2021,
+      "status": "ok"
+    },
+    "A14": {
+      "doi": "10.1109/naps58826.2023.10318707",
+      "title": "Analyzing the Implementation of the Newton Raphson Based Power Flow Formulation in CPU+GPU Computing",
+      "citations": 3,
+      "authors": "Taha Saeed Khan et al.",
+      "oa_title": "Analyzing the Implementation of the Newton Raphson Based Power Flow Formulation in CPU+GPU Computing Environment",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "A15": {
+      "doi": "10.1109/epee63731.2024.10875411",
+      "title": "Research on GPU Accelerated Polar Power Flow Calculation",
+      "citations": 0,
+      "authors": "Haowei Li et al.",
+      "oa_title": "Research on GPU Accelerated Polar Power Flow Calculation",
+      "oa_year": 2024,
+      "status": "ok"
+    },
+    "A16": {
+      "doi": "10.1109/ei264398.2024.10991444",
+      "title": "GPU-Accelerated Power Flow Analysis",
+      "citations": 0,
+      "authors": "Sipeng Luo et al.",
+      "oa_title": "GPU-Accelerated Power Flow Analysis",
+      "oa_year": 2024,
+      "status": "ok"
+    },
+    "B01": {
+      "doi": "10.1109/hicss.2014.315",
+      "title": "GPU-Accelerated Solutions to Optimal Power Flow Problems",
+      "citations": 20,
+      "authors": "Logan Rakai et al.",
+      "oa_title": "GPU-Accelerated Solutions to Optimal Power Flow Problems",
+      "oa_year": 2014,
+      "status": "ok"
+    },
+    "B02": {
+      "doi": "10.1109/tsg.2016.2639551",
+      "title": "Parallel Transient Stability-Constrained Optimal Power Flow Using GPU as Coprocessor",
+      "citations": 25,
+      "authors": "Guangchao Geng et al.",
+      "oa_title": "Parallel Transient Stability-Constrained Optimal Power Flow Using GPU as Coprocessor",
+      "oa_year": 2016,
+      "status": "ok"
+    },
+    "B03": {
+      "doi": "10.48550/arXiv.2110.06879",
+      "title": "Accelerated Computation and Tracking of AC Optimal Power Flow Solutions Using GPUs",
+      "citations": 1,
+      "authors": "Youngdae Kim et al.",
+      "oa_title": "Accelerated Computation and Tracking of AC Optimal Power Flow Solutions using GPUs",
+      "oa_year": 2021,
+      "status": "ok"
+    },
+    "B04": {
+      "doi": "10.1016/j.ijepes.2023.109517",
+      "title": "GPU-resident sparse direct linear solvers for alternating current optimal power flow analysis",
+      "citations": 14,
+      "authors": "Kasia Świrydowicz et al.",
+      "oa_title": "GPU-resident sparse direct linear solvers for alternating current optimal power flow analysis",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "B05": {
+      "doi": "10.48550/arXiv.2310.09410",
+      "title": "A GPU-based Distributed Algorithm for Linearized Optimal Power Flow in Distribution Systems",
+      "citations": 0,
+      "authors": "Minseok Ryu et al.",
+      "oa_title": "A GPU-based Distributed Algorithm for Linearized Optimal Power Flow in Distribution Systems",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "B06": {
+      "doi": "10.1016/j.epsr.2024.110651",
+      "title": "Accelerating optimal power flow with GPUs: SIMD abstraction of nonlinear programs and condensed Newton",
+      "citations": 30,
+      "authors": "Sungho Shin et al.",
+      "oa_title": "Accelerating optimal power flow with GPUs: SIMD abstraction of nonlinear programs and condensed-space interior-point methods",
+      "oa_year": 2024,
+      "status": "ok"
+    },
+    "B07": {
+      "doi": "10.1109/osmses62085.2024.10668970",
+      "title": "Scalable Multi-Period AC Optimal Power Flow Utilizing GPUs with High Memory Capacities",
+      "citations": 3,
+      "authors": "Sungho Shin et al.",
+      "oa_title": "Scalable Multi-Period AC Optimal Power Flow Utilizing GPUs with High Memory Capacities",
+      "oa_year": 2024,
+      "status": "ok"
+    },
+    "B08": {
+      "doi": "10.1109/ipdps64566.2025.00068",
+      "title": "A GPU-Accelerated Distributed Algorithm for Optimal Power Flow in Distribution Systems",
+      "citations": 0,
+      "authors": "Minseok Ryu et al.",
+      "oa_title": "A GPU-Accelerated Distributed Algorithm for Optimal Power Flow in Distribution Systems",
+      "oa_year": 2025,
+      "status": "ok"
+    },
+    "B09": {
+      "doi": "10.1007/s11081-026-10085-6",
+      "title": "GPU Accelerated Security Constrained Optimal Power Flow",
+      "citations": 1,
+      "authors": "Anthony Degleris et al.",
+      "oa_title": "GPU Accelerated Security Constrained Optimal Power Flow",
+      "oa_year": 2026,
+      "status": "ok"
+    },
+    "B10": {
+      "doi": "10.1016/j.epsr.2026.113627",
+      "title": "An augmented Lagrangian method on GPU for security-constrained AC optimal power flow",
+      "citations": 0,
+      "authors": "François Pacaud et al.",
+      "oa_title": "An augmented Lagrangian method on GPU for security-constrained AC optimal power flow",
+      "oa_year": 2026,
+      "status": "ok"
+    },
+    "C01": {
+      "doi": "10.48550/arXiv.2310.13145",
+      "title": "On Solving Unit Commitment with Alternating Current Optimal Power Flow on GPU",
+      "citations": 0,
+      "authors": "Weiqi Zhang et al.",
+      "oa_title": "On Solving Unit Commitment with Alternating Current Optimal Power Flow on GPU",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "C02": {
+      "doi": "10.1109/naps66256.2025.11272365",
+      "title": "Scalable Unit Commitment for Large Power Grids: Relaxation, Tightening, and GPU-Based Solvers Evaluation",
+      "citations": 0,
+      "authors": "Hussein Sharadga et al.",
+      "oa_title": "Scalable Unit Commitment for Large Power Grids: Relaxation, Tightening, and GPU-Based Solvers Evaluation",
+      "oa_year": 2025,
+      "status": "ok"
+    },
+    "C03": {
+      "doi": "10.1109/tpec67884.2026.11513113",
+      "title": "GPU-Accelerated Optimization Solver for Unit Commitment in Large-Scale Power Grids",
+      "citations": 0,
+      "authors": "Hussein Sharadga et al.",
+      "oa_title": "GPU-Accelerated Optimization Solver for Unit Commitment in Large-Scale Power Grids",
+      "oa_year": 2026,
+      "status": "ok"
+    },
+    "D01": {
+      "doi": "10.1002/wene.460",
+      "title": "Distributed energy resource management systems - DERMS: State of the art and how to move forward",
+      "citations": 50,
+      "authors": "Lukа Strеzоski",
+      "oa_title": "Distributed energy resource management systems— DERMS : State of the art and how to move forward",
+      "oa_year": 2022,
+      "status": "ok"
+    },
+    "D02": {
+      "doi": "10.1109/isgt49243.2021.9372281",
+      "title": "Distributed Energy Resource Management System (DERMS) solution for feeder Voltage Management for Utility integrated DERs",
+      "citations": 14,
+      "authors": "Imran Rahman et al.",
+      "oa_title": "Distributed Energy Resource Management System (DERMS) solution for feeder Voltage Management for Utility integrated DERs",
+      "oa_year": 2021,
+      "status": "ok"
+    },
+    "D03": {
+      "doi": "10.1049/iet-gtd.2019.1022",
+      "title": "Interactive protocols for distributed energy resource management systems (DERMS)",
+      "citations": 22,
+      "authors": "Marija Ilić et al.",
+      "oa_title": "Interactive protocols for distributed energy resource management systems (DERMS)",
+      "oa_year": 2020,
+      "status": "ok"
+    },
+    "D04": {
+      "doi": "10.1109/pesgm52003.2023.10252194",
+      "title": "Evaluation of Communication Issues in Primal-Dual-Based Distributed Energy Resource Management Systems (DERMS)",
+      "citations": 2,
+      "authors": "Joshua Comden et al.",
+      "oa_title": "Evaluation of Communication Issues in Primal-Dual-Based Distributed Energy Resource Management Systems (DERMS)",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "D05": {
+      "doi": "10.1109/isgt51731.2023.10066440",
+      "title": "Study of Communication Boundaries of Primal-Dual-Based Distributed Energy Resource Management Systems (DERMS)",
+      "citations": 0,
+      "authors": "Joshua Comden et al.",
+      "oa_title": "Study of Communication Boundaries of Primal-Dual-Based Distributed Energy Resource Management Systems (DERMS)",
+      "oa_year": 2023,
+      "status": "ok"
+    },
+    "D06": {
+      "doi": "10.2172/2356774",
+      "title": "Real Time-Optimal Power Flow-Based Distributed Energy Resource Management System (DERMS)",
+      "citations": 2,
+      "authors": "Jing Wang et al.",
+      "oa_title": "Real Time-Optimal Power Flow-Based Distributed Energy Resource Management System (DERMS)",
+      "oa_year": 2024,
+      "status": "ok"
+    },
+    "D07": {
+      "doi": "10.1109/ieeestd.2021.9447316",
+      "title": "IEEE Guide for Distributed Energy Resources Management Systems (DERMS) Functional Specification",
+      "citations": 32,
+      "authors": "",
+      "oa_title": "IEEE Guide for Distributed Energy Resources Management Systems (DERMS) Functional Specification",
+      "oa_year": 2021,
+      "status": "ok"
+    },
+    "E01": {
+      "doi": "10.1007/978-3-030-49428-5_2",
+      "title": "Metaheuristics for Transmission Network Expansion Planning",
+      "citations": 3,
+      "authors": "Gianfranco Chicco et al.",
+      "oa_title": "Metaheuristics for Transmission Network Expansion Planning",
+      "oa_year": 2020,
+      "status": "ok"
+    },
+    "E02": {
+      "doi": "10.1007/978-3-030-49428-5_10",
+      "title": "Energy Storage Systems in Transmission Expansion Planning",
+      "citations": 4,
+      "authors": "Reza Hemmati",
+      "oa_title": "Energy Storage Systems in Transmission Expansion Planning",
+      "oa_year": 2020,
+      "status": "ok"
+    },
+    "E03": {
+      "doi": "10.1002/9781119819042.ch11",
+      "title": "Transmission Expansion Planning Problem",
+      "citations": 0,
+      "authors": "Jaeseok Choi et al.",
+      "oa_title": "Transmission Expansion Planning Problem",
+      "oa_year": 2021,
+      "status": "ok"
+    },
+    "S01": {
+      "doi": "10.1109/pesgm.2016.7741984",
+      "title": "A survey of high-performance computing approaches in power systems",
+      "citations": 19,
+      "authors": "Siddhartha Kumar Khaitan",
+      "oa_title": "A survey of high-performance computing approaches in power systems",
+      "oa_year": 2016,
+      "status": "ok"
+    },
+    "S02": {
+      "doi": "10.1109/tsg.2017.2720471",
+      "title": "A Survey of Distributed Optimization and Control Algorithms for Electric Power Systems",
+      "citations": 1288,
+      "authors": "Daniel K. Molzahn et al.",
+      "oa_title": "A Survey of Distributed Optimization and Control Algorithms for Electric Power Systems",
+      "oa_year": 2017,
+      "status": "ok"
+    }
+  }
+}
