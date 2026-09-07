@@ -10,7 +10,7 @@ nav_order: 9
 
 {%- for page in site.pages -%}
 {%- if page.data_quiz and page.content -%}
-<script type="application/json" class="quiz-doc" data-id="{{ page.slug }}" data-title="{{ page.title }}" data-url="{{ page.url | relative_url }}" data-kind="{{ page.data_quiz }}">{{ page.content | replace: "</", '<\/' | jsonify }}</script>
+<script type="application/json" class="quiz-doc" data-id="{{ page.url }}" data-title="{{ page.title }}" data-url="{{ page.url | relative_url }}" data-kind="{{ page.data_quiz }}">{{ page.content | jsonify | replace: "</", '<\/' }}</script>
 {%- endif -%}
 {%- endfor -%}
 
