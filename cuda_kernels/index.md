@@ -2,6 +2,7 @@
 layout: default
 title: CUDA Kernels
 nav_exclude: true
+data_quiz: "Kernels lab"
 ---
 
 # CUDA kernels

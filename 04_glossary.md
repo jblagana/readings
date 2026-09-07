@@ -2,6 +2,7 @@
 layout: default
 title: "04 — Glossary"
 nav_order: 4
+data_quiz: "Glossary"
 ---
 
 # 04 — Glossary: formal + plain language, two registers for every term

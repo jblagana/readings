@@ -24,9 +24,16 @@ optimization and DERMS.
 | [06 — PhD roadmap](06_phd_roadmap.md) | Semester plan, five research directions, target venues |
 | [papers_scopus_table.csv](papers_scopus_table.csv) | The auditable paper table (DOI, venue, speedup) |
 | [cuda_kernels/](cuda_kernels/) | Three self-verifying CUDA kernels + build script |
+| [Quiz](quiz.md) | Self-generated quiz from every document, with per-topic mastery tracking |
 
 ## How the site works
 
 This repo **is** the website: Jekyll (minima theme) served by GitHub Pages
 from the `main` branch. Edit any `.md` file, commit, push — the site rebuilds
 in about a minute. The custom styling lives in `assets/css/site.css`.
+
+The quiz page (`quiz.md`) embeds each document's rendered HTML as JSON, and
+`assets/js/quiz.js` composes a fresh randomized quiz in the browser from it —
+so editing a document automatically changes what the quiz can ask. Per-topic
+mastery is kept in `localStorage`, and weak topics are sampled more often in
+the next quiz.

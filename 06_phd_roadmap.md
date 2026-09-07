@@ -2,6 +2,7 @@
 layout: default
 title: "06 — PhD Roadmap"
 nav_order: 6
+data_quiz: "PhD roadmap"
 ---
 
 # 06 — PhD Roadmap: GPU-Accelerated Grid Optimization

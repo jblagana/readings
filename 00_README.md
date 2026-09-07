@@ -2,6 +2,7 @@
 layout: default
 title: Package README
 nav_exclude: true
+data_quiz: "Package map"
 ---
 
 # GPU-Accelerated Grid Optimization — Review & Learning Package

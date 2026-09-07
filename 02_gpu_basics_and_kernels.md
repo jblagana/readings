@@ -2,6 +2,7 @@
 layout: default
 title: "02 — GPU Basics and Kernels"
 nav_order: 2
+data_quiz: "GPU & kernels"
 ---
 
 # 02 — GPU Basics and Kernels: how the hardware actually works

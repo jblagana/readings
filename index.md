@@ -80,6 +80,7 @@ nav_exclude: true
   <a class="artifact" href="papers_scopus_table.csv"><span class="artifact-ico" aria-hidden="true">📊</span> Paper table (CSV)</a>
   <a class="artifact" href="cuda_kernels/"><span class="artifact-ico" aria-hidden="true">⚡</span> CUDA kernels &amp; benchmarks</a>
   <a class="artifact" href="00_README.html"><span class="artifact-ico" aria-hidden="true">📦</span> Package README</a>
+  <a class="artifact" href="quiz.html"><span class="artifact-ico" aria-hidden="true">🎯</span> Self-generated quiz</a>
 </div>
 
 <p class="hero-note">Literature data collected 2026-09-04 via Crossref and OpenAlex; benchmark numbers measured on 8&times; A100-40GB (CUDA 12.8). Each document carries its own provenance and verification notes.</p>

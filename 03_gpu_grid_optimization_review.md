@@ -2,6 +2,7 @@
 layout: default
 title: "03 — Grid Optimization Review"
 nav_order: 3
+data_quiz: "Grid review"
 ---
 
 # 03 — GPU-Accelerated Grid Optimization: A Review

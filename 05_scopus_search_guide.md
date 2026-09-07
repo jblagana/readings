@@ -2,6 +2,7 @@
 layout: default
 title: "05 — Scopus Search Guide"
 nav_order: 5
+data_quiz: "Scopus guide"
 ---
 
 # 05 — Scopus Search Guide: verify, query, and keep this table alive

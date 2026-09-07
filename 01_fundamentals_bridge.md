@@ -2,6 +2,7 @@
 layout: default
 title: "01 — Fundamentals Bridge"
 nav_order: 1
+data_quiz: "Fundamentals"
 ---
 
 # 01 — Fundamentals Bridge: from Circuits to GPU-based Grid Optimization
