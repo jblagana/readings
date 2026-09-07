@@ -1,0 +1,19 @@
+title: GPU-Accelerated Grid Optimization
+subtitle: Review and learning package
+description: A practical path from power-system fundamentals to GPU-accelerated optimization, DERMS, and PhD research.
+theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+header_pages:
+  - 01_fundamentals_bridge.md
+  - 02_gpu_basics_and_kernels.md
+  - 03_gpu_grid_optimization_review.md
+  - 04_glossary.md
+  - 05_scopus_search_guide.md
+  - 06_phd_roadmap.md
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - build_site.py
