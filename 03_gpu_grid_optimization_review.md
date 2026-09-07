@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "03 — GPU-Accelerated Grid Optimization Review"
+title: "03 — Grid Optimization Review"
 nav_order: 3
 ---
 

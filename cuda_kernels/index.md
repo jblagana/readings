@@ -23,9 +23,10 @@ Three real, self-verifying CUDA kernels — the code behind the walkthroughs in 
 | [01_dot_product.cu](01_dot_product.cu) | Source: vector dot product, 1e8 doubles, GB/s + speedup reported. |
 | [02_spmv.cu](02_spmv.cu) | Source: CSR SpMV at N = 10⁵ and 10⁶ rows, bandwidth B = 9. |
 | [03_pf_gauss_seidel.cu](03_pf_gauss_seidel.cu) | Source: 5-bus system, CPU GS vs GPU Jacobi, Tellegen balance check. |
-| [01_dot_product](01_dot_product) · [02_spmv](02_spmv) · [03_pf_gauss_seidel](03_pf_gauss_seidel) | Compiled binaries (Linux x86-64, CUDA 12.8, `sm_80`/A100) — for reference; they will not run on Windows. |
 | [build_and_run.sh](build_and_run.sh) | Builds all three with `nvcc` and runs the benchmarks. |
 | [run_kernels.ipynb](run_kernels.ipynb) | Notebook harness used to capture the A100 benchmark numbers. |
+
+> **Compiled binaries** from the A100 benchmark runs are intentionally not published — they are Linux-specific, and `./build_and_run.sh` rebuilds them in seconds on any CUDA machine.
 
 ## Build and run
 
