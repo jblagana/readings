@@ -59,7 +59,7 @@ nav_order: 8
         <span class="pd-key">{{ row.subtopic | slice: 0, 1 }}</span>
         <span class="pd-subname">{{ pd_subname }}</span>
         <span class="pd-badge pd-badge-yr">{{ row.year }}</span>
-        <span class="pd-badge">{{ row.venue_type }}</span>
+        <span class="pd-badge">{{ row.venue_type | replace: '+', ' + ' }}</span>
       </div>
       <h2 class="pd-title">{{ row.title }}</h2>
       <div class="pd-meta">
@@ -128,7 +128,7 @@ nav_order: 8
         <a class="pd-ocard" href="#{{ row.id }}">
           <span class="pd-ocard-top"><span class="pd-ocard-id">{{ row.id }}</span><span class="pd-ocard-yr">{{ row.year }}</span></span>
           <span class="pd-ocard-title">{{ row.title }}</span>
-          <span class="pd-ocard-cite"><b>{%- if s.citations == nil %}&ndash;{%- elsif s.citations == 1 %}1{%- else %}{{ s.citations }}{%- endif %}</b> citations &middot; {{ row.venue_type }}</span>
+          <span class="pd-ocard-cite"><b>{%- if s.citations == nil %}&ndash; n/a{%- elsif s.citations == 1 %}1 citation{%- else %}{{ s.citations }} citations{%- endif %}</b> &middot; {{ row.venue_type | replace: '+', ' + ' }}</span>
         </a>
       {%- endfor -%}
     </div>
