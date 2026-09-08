@@ -37,3 +37,30 @@ The quiz page (`quiz.md`) embeds each document's rendered HTML as JSON, and
 so editing a document automatically changes what the quiz can ask. Per-topic
 mastery is kept in `localStorage`, and weak topics are sampled more often in
 the next quiz.
+
+### Glossary tooltips
+
+Glossary terms in the posts light up on hover (or keyboard focus) with their
+formal + plain definitions, without leaving the page. The tooltip data is
+generated, not hand-maintained:
+
+```bash
+python3 tools/build_glossary_terms.py            # regenerate _data/glossary.json
+python3 tools/build_glossary_terms.py --report   # preview every match first
+node tools/check_glossary_tooltips.js            # sanity-check JSON + matcher
+```
+
+- `04_glossary.md` remains the single source of truth;
+  `tools/build_glossary_terms.py` parses it and writes `_data/glossary.json`
+  (terms + curated match patterns per term).
+- `_includes/head.html` injects that JSON as `window.READINGS_GLOSSARY`;
+  `assets/js/glossary_tooltips.js` wraps term occurrences in `#main` with a
+  `.gt-term` span and shows a shared `.gt-tip` tooltip (styled in
+  `assets/css/site.css`).
+- Matching is boundary-guarded and longest-match-wins, so "OPF" never fires
+  inside "DC-OPF"/"SCOPF" and "bus" never inside "Ybus". Code blocks and form
+  controls are never touched, and the glossary page itself disables tooltips
+  via `no_tooltips: true` in its front matter.
+
+After editing the glossary (or its `MATCHES` curation in the build script),
+re-run the build so the site picks up the new terms.

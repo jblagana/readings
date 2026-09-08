@@ -1253,3 +1253,83 @@ blockquote {
   .pd-counter { min-width: 56px; }
   .pd-cards { grid-template-columns: 1fr 1fr; }
 }
+
+/* ==========================================================================
+   Glossary tooltips — terms wrapped by assets/js/glossary_tooltips.js
+   get a quiet dotted underline; the shared .gt-tip carries the
+   Formal / Plain definitions from _data/glossary.json.
+   ========================================================================== */
+.gt-term {
+  border-bottom: 1px dotted var(--amber-deep);
+  cursor: help;
+  border-radius: 2px;
+  transition: background-color .12s ease, border-color .12s ease;
+}
+.gt-term:hover,
+.gt-term:focus-visible {
+  background: var(--amber-soft);
+  border-bottom-color: var(--amber-deep);
+  outline: none;
+}
+
+.gt-tip {
+  position: fixed;
+  z-index: 90;
+  max-width: min(380px, calc(100vw - 24px));
+  padding: 11px 13px 10px;
+  border-radius: 10px;
+  background: var(--navy);
+  color: #e8edf6;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(3px);
+  transition: opacity .13s ease, transform .13s ease, visibility .13s;
+  pointer-events: none;
+}
+.gt-tip.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* Arrow points at the term. */
+.gt-tip::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: var(--gt-ax, 50%);
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  background: var(--navy);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.gt-tip.is-below::after { bottom: auto; top: -5px; }
+
+.gt-tip-term {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+.gt-tip-row { margin: 0 0 5px; }
+.gt-tip-row:last-child { margin-bottom: 0; }
+.gt-tip-row.gt-tip-plain { color: #b9c4d6; }
+.gt-tip-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+  background: rgba(245, 158, 11, .12);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 3px;
+  width: fit-content;
+}
+.gt-tip-row.gt-tip-plain .gt-tip-label {
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, .12);
+}
