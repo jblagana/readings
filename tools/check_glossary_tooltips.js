@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const { buildMatchers, matchesIn, isGlossaryMarker } = require(path.join(ROOT, 'assets', 'js', 'glossary_tooltips.js'));
+const { buildMatchers, matchesIn, isGlossaryMarker, pickRoot } = require(path.join(ROOT, 'assets', 'js', 'glossary_tooltips.js'));
 
 let failures = 0;
 
@@ -120,6 +120,26 @@ ok(!isGlossaryMarker('(Glossary)'), 'uppercase G is not a marker');
 ok(!isGlossaryMarker('*(glossary)*'), 'markdown asterisks are not a rendered marker');
 ok(!isGlossaryMarker('(glossary: unterminated'), 'unterminated detail is not a marker');
 ok(!isGlossaryMarker(''), 'empty text is not a marker');
+
+/* ------------------------------------------------------------------ */
+console.log('content root:');
+
+const elA = { nodeType: 1 };
+const elB = { nodeType: 1 };
+ok(pickRoot([null, null]) === null, 'no candidates -> null');
+ok(pickRoot([]) === null, 'empty candidate list -> null');
+ok(pickRoot([null, elA, elB]) === elA, 'first present candidate wins (priority order)');
+ok(pickRoot([elB]) === elB, 'single candidate is returned');
+ok(pickRoot([{ nodeType: 3 }, elB]) === elB, 'non-element candidates are skipped');
+
+/* Regression guard: the minima theme renders content in
+   <main class="page-content"> with NO id — the resolver must reach
+   past #main or init() bails out silently and markers stay visible. */
+const jsSrc = fs.readFileSync(path.join(ROOT, 'assets', 'js', 'glossary_tooltips.js'), 'utf8');
+ok(/getElementById\('main-content'\)/.test(jsSrc) &&
+   /querySelector\('main\.page-content'\)/.test(jsSrc) &&
+   /document\.body/.test(jsSrc),
+   'content root resolves beyond #main (minima ships an id-less <main>)');
 
 /* ------------------------------------------------------------------ */
 console.log(failures === 0

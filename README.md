@@ -55,9 +55,10 @@ node tools/check_glossary_tooltips.js            # sanity-check JSON + matcher
   (terms + curated match patterns per term).
 - `_includes/head.html` injects that JSON (`site.data.glossary | jsonify`) as
   `window.READINGS_GLOSSARY`;
-  `assets/js/glossary_tooltips.js` wraps term occurrences in `#main` with a
-  `.gt-term` span and shows a shared `.gt-tip` tooltip (styled in
-  `assets/css/site.css`).
+  `assets/js/glossary_tooltips.js` wraps term occurrences in the page'
+  content root (the `<main class="page-content">` area — the minima theme
+  ships no `#main`) with a `.gt-term` span and shows a shared `.gt-tip`
+  tooltip (styled in `assets/css/site.css`).
 - Each wrapped term shows a small superscript ¹. The old literal
   `*(glossary)*` / `*(glossary: ...)*` source markers are stripped from the
   rendered page (including the per-section summary lines that consisted of

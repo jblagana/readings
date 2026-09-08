@@ -9,10 +9,12 @@
    What it does:
      - strips the authoring markers *(glossary)* / *(glossary: ...)*
        from the rendered page — the inline tooltips replace them;
-     - walks the text nodes of #main and wraps each glossary-term
-       occurrence in <span class="gt-term" tabindex="0" data-gt="i">,
-       carrying a small superscript ¹ (code, pre and form controls
-       are never touched);
+     - walks the text nodes of the page's content root and wraps each
+       glossary-term occurrence in <span class="gt-term" tabindex="0"
+       data-gt="i">, carrying a small superscript ¹ (code, pre and form
+       controls are never touched). The root is resolved defensively —
+       #main, #main-content, <main class="page-content">, any <main>,
+       then <body> — because the minima theme ships an id-less <main>;
      - shows the term's glossary definition (Formal + Plain) in one
        shared tooltip on hover or keyboard focus;
      - the tooltip is pure reference — it does not link anywhere.
@@ -125,7 +127,8 @@
       buildMatchers: buildMatchers,
       matchesIn: matchesIn,
       isGlossaryMarker: isGlossaryMarker,
-      stripGlossaryMarkers: stripGlossaryMarkers
+      stripGlossaryMarkers: stripGlossaryMarkers,
+      pickRoot: pickRoot
     };
   }
   if (!data || typeof document === 'undefined') return;
@@ -318,8 +321,30 @@
    * adds later (quiz questions, paper-deck slides).
    * ------------------------------------------------------------------ */
 
+  /* Where the page content lives. The minima theme renders it in
+     <main class="page-content"> with NO id, so getElementById('main')
+     is null on every page of this site — trying #main alone made init()
+     bail out silently (no marker stripping, no wrapping, no tooltips).
+     Return the first candidate that is an actual element. */
+  function pickRoot(candidates) {
+    for (var i = 0; i < (candidates || []).length; i++) {
+      if (candidates[i] && candidates[i].nodeType === 1) return candidates[i];
+    }
+    return null;
+  }
+
+  function contentRoot() {
+    return pickRoot([
+      document.getElementById('main'),
+      document.getElementById('main-content'),
+      document.querySelector('main.page-content'),
+      document.querySelector('main'),
+      document.body
+    ]);
+  }
+
   function init() {
-    var root = document.getElementById('main');
+    var root = contentRoot();
     if (!root) return;
     stripGlossaryMarkers(root);
     scan(root);
