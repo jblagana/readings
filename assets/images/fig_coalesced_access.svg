@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="t d">
+  <title id="t">Coalesced versus strided memory access</title>
+  <desc id="d">Top: 32 threads reading consecutive addresses merge into one memory transaction. Bottom: the same warp reading with a stride of 4 causes 32 separate transactions.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 13.5px; font-weight: 700; fill: #0d1526; }
+    .t { font-size: 10.5px; font-weight: 600; }
+    .bar { font-size: 12px; font-weight: 700; }
+    .lab { font-size: 12px; }
+  </style>
+
+  <!-- panel A: coalesced -->
+  <rect x="24" y="24" width="712" height="146" rx="10" fill="#f8fafc" stroke="#e4e8ee"/>
+  <text class="h" x="44" y="52">coalesced — thread i reads address i (consecutive)</text>
+  <g class="t" fill="#b45309" text-anchor="middle">
+    <text x="53.5" y="70">T0</text><text x="200.5" y="70">T7</text><text x="368.5" y="70">T15</text><text x="536.5" y="70">T23</text><text x="704.5" y="70">T31</text>
+  </g>
+  <g stroke="#b45309" stroke-width="1.5">
+    <line x1="53.5" y1="73" x2="53.5" y2="77"/><line x1="200.5" y1="73" x2="200.5" y2="77"/><line x1="368.5" y1="73" x2="368.5" y2="77"/><line x1="536.5" y1="73" x2="536.5" y2="77"/><line x1="704.5" y1="73" x2="704.5" y2="77"/>
+  </g>
+  <g fill="#ffffff" stroke="#46536b">
+    <rect x="44" y="78" width="19" height="34"/><rect x="65" y="78" width="19" height="34"/><rect x="86" y="78" width="19" height="34"/><rect x="107" y="78" width="19" height="34"/><rect x="128" y="78" width="19" height="34"/><rect x="149" y="78" width="19" height="34"/><rect x="170" y="78" width="19" height="34"/><rect x="191" y="78" width="19" height="34"/><rect x="212" y="78" width="19" height="34"/><rect x="233" y="78" width="19" height="34"/><rect x="254" y="78" width="19" height="34"/><rect x="275" y="78" width="19" height="34"/><rect x="296" y="78" width="19" height="34"/><rect x="317" y="78" width="19" height="34"/><rect x="338" y="78" width="19" height="34"/><rect x="359" y="78" width="19" height="34"/>
+    <rect x="380" y="78" width="19" height="34"/><rect x="401" y="78" width="19" height="34"/><rect x="422" y="78" width="19" height="34"/><rect x="443" y="78" width="19" height="34"/><rect x="464" y="78" width="19" height="34"/><rect x="485" y="78" width="19" height="34"/><rect x="506" y="78" width="19" height="34"/><rect x="527" y="78" width="19" height="34"/><rect x="548" y="78" width="19" height="34"/><rect x="569" y="78" width="19" height="34"/><rect x="590" y="78" width="19" height="34"/><rect x="611" y="78" width="19" height="34"/><rect x="632" y="78" width="19" height="34"/><rect x="653" y="78" width="19" height="34"/><rect x="674" y="78" width="19" height="34"/><rect x="695" y="78" width="19" height="34"/>
+  </g>
+  <rect x="44" y="126" width="670" height="18" rx="4" fill="#f59e0b"/>
+  <text class="bar" x="379" y="139" text-anchor="middle" fill="#0d1526">one memory transaction — 32 words in a single burst</text>
+
+  <!-- panel B: strided -->
+  <rect x="24" y="190" width="712" height="146" rx="10" fill="#f8fafc" stroke="#e4e8ee"/>
+  <text class="h" x="44" y="218">strided — thread i reads address 4*i (stride 4)</text>
+  <g class="t" fill="#b91c1c" text-anchor="middle">
+    <text x="53.5" y="236">T0</text><text x="137.5" y="236">T1</text><text x="221.5" y="236">T2</text><text x="305.5" y="236">T3</text><text x="389.5" y="236">T4</text><text x="473.5" y="236">T5</text><text x="557.5" y="236">T6</text><text x="641.5" y="236">T7</text>
+  </g>
+  <g stroke="#b91c1c" stroke-width="1.5">
+    <line x1="53.5" y1="239" x2="53.5" y2="243"/><line x1="137.5" y1="239" x2="137.5" y2="243"/><line x1="221.5" y1="239" x2="221.5" y2="243"/><line x1="305.5" y1="239" x2="305.5" y2="243"/><line x1="389.5" y1="239" x2="389.5" y2="243"/><line x1="473.5" y1="239" x2="473.5" y2="243"/><line x1="557.5" y1="239" x2="557.5" y2="243"/><line x1="641.5" y1="239" x2="641.5" y2="243"/>
+  </g>
+  <g fill="#ffffff" stroke="#46536b">
+    <rect x="44" y="244" width="19" height="34"/><rect x="65" y="244" width="19" height="34"/><rect x="86" y="244" width="19" height="34"/><rect x="107" y="244" width="19" height="34"/><rect x="128" y="244" width="19" height="34"/><rect x="149" y="244" width="19" height="34"/><rect x="170" y="244" width="19" height="34"/><rect x="191" y="244" width="19" height="34"/><rect x="212" y="244" width="19" height="34"/><rect x="233" y="244" width="19" height="34"/><rect x="254" y="244" width="19" height="34"/><rect x="275" y="244" width="19" height="34"/><rect x="296" y="244" width="19" height="34"/><rect x="317" y="244" width="19" height="34"/><rect x="338" y="244" width="19" height="34"/><rect x="359" y="244" width="19" height="34"/>
+    <rect x="380" y="244" width="19" height="34"/><rect x="401" y="244" width="19" height="34"/><rect x="422" y="244" width="19" height="34"/><rect x="443" y="244" width="19" height="34"/><rect x="464" y="244" width="19" height="34"/><rect x="485" y="244" width="19" height="34"/><rect x="506" y="244" width="19" height="34"/><rect x="527" y="244" width="19" height="34"/><rect x="548" y="244" width="19" height="34"/><rect x="569" y="244" width="19" height="34"/><rect x="590" y="244" width="19" height="34"/><rect x="611" y="244" width="19" height="34"/><rect x="632" y="244" width="19" height="34"/><rect x="653" y="244" width="19" height="34"/><rect x="674" y="244" width="19" height="34"/><rect x="695" y="244" width="19" height="34"/>
+  </g>
+  <g fill="#fee2e2" stroke="#dc2626">
+    <rect x="44" y="244" width="19" height="34"/><rect x="128" y="244" width="19" height="34"/><rect x="212" y="244" width="19" height="34"/><rect x="296" y="244" width="19" height="34"/><rect x="380" y="244" width="19" height="34"/><rect x="464" y="244" width="19" height="34"/><rect x="548" y="244" width="19" height="34"/><rect x="632" y="244" width="19" height="34"/>
+  </g>
+  <g fill="#dc2626">
+    <rect x="44" y="292" width="19" height="16" rx="3"/><rect x="128" y="292" width="19" height="16" rx="3"/><rect x="212" y="292" width="19" height="16" rx="3"/><rect x="296" y="292" width="19" height="16" rx="3"/><rect x="380" y="292" width="19" height="16" rx="3"/><rect x="464" y="292" width="19" height="16" rx="3"/><rect x="548" y="292" width="19" height="16" rx="3"/><rect x="632" y="292" width="19" height="16" rx="3"/>
+  </g>
+  <text class="lab" x="664" y="305" fill="#b91c1c" font-weight="700">32 transactions</text>
+  <text class="lab" x="44" y="326" fill="#46536b">same 32 reads, 32 separate transactions — up to 10x the memory work</text>
+</svg>

@@ -188,10 +188,14 @@ hr {
   }
 
   .site-title::before {
-    content: "\26a1";
-    color: var(--amber);
+    content: "";
+    display: inline-block;
+    flex: none;
+    width: 19px;
+    height: 19px;
     margin-right: 9px;
-    font-size: 16px;
+    vertical-align: -4px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 21C28 17.5 18 16 10.5 17.5L10.5 49.5C18 48 28 49.5 32 53C36 49.5 46 48 53.5 49.5L53.5 17.5C46 16 36 17.5 32 21Z' fill='%23f59e0b'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
   .site-nav {
@@ -308,6 +312,168 @@ figure.highlight,
 
 figure.highlight pre {
   margin: 0;
+}
+
+/* ---------- Rouge tokens on the navy pre ----------
+   The theme ships a light-background token palette (#458 types, #099
+   numbers, teal variables, navy tags) that is barely visible on the
+   navy pre above. Re-tint every token for the dark surface. */
+
+.highlight .hll {
+  background-color: rgba(245, 158, 11, 0.14);
+}
+
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
+  color: #7c8aa0;
+  font-style: italic;
+}
+
+.highlight .cp {
+  color: #9aa7bd;
+  font-weight: 700;
+}
+
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kp,
+.highlight .kr,
+.highlight .ow {
+  color: #9db8e8;
+  font-weight: 700;
+}
+
+.highlight .kt,
+.highlight .nc,
+.highlight .nn,
+.highlight .nt {
+  color: #7fd1c8;
+  font-weight: 700;
+}
+
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .ss {
+  color: #f0c674;
+}
+
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+  color: #f2a06b;
+}
+
+.highlight .na,
+.highlight .no,
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+  color: #f2b8c6;
+}
+
+.highlight .nb,
+.highlight .nf {
+  color: #8fd3f7;
+}
+
+.highlight .nf {
+  font-weight: 700;
+}
+
+.highlight .ne {
+  color: #f2a06b;
+  font-weight: 700;
+}
+
+.highlight .ni {
+  color: #d7dee9;
+}
+
+.highlight .o,
+.highlight .p,
+.highlight .w {
+  color: #c3cede;
+}
+
+.highlight .bp,
+.highlight .gh,
+.highlight .gp,
+.highlight .go {
+  color: #9aa7bd;
+}
+
+.highlight .gu {
+  color: #b6c2d6;
+}
+
+.highlight .ge {
+  font-style: italic;
+}
+
+.highlight .gs {
+  font-weight: 700;
+}
+
+.highlight .gr,
+.highlight .gt {
+  color: #ff7a90;
+}
+
+.highlight .gd {
+  color: #f28b8b;
+  background-color: rgba(166, 23, 23, 0.18);
+}
+
+.highlight .gi {
+  color: #8fe3b0;
+  background-color: rgba(16, 185, 129, 0.15);
+}
+
+.highlight .err {
+  color: #ff7a90;
+  background-color: rgba(166, 23, 23, 0.35);
+}
+
+/* ---------- concept figures (inline SVG) ---------- */
+
+figure.rdiagram {
+  margin: 26px 0;
+  padding: 18px 18px 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+figure.rdiagram img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+figure.rdiagram figcaption {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 /* ---------- blockquote ---------- */

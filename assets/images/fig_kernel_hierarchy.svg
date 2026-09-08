@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" role="img" aria-labelledby="t d">
+  <title id="t">Kernel launch hierarchy: grid of blocks, block of threads, one warp of 32</title>
+  <desc id="d">A grid of blocks on the left, a zoomed block of 32 thread dots in the middle with one warp bracketed, and a single thread on the right.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 14px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .warp { font-size: 11.5px; font-weight: 700; fill: #b45309; }
+    .zoom { font-size: 10.5px; fill: #7d8798; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <!-- grid panel -->
+  <text class="h" x="132" y="44" text-anchor="middle">grid</text>
+  <text class="sub" x="132" y="62" text-anchor="middle">(one kernel launch)</text>
+  <g fill="#ffffff" stroke="#0d1526" stroke-width="1.5">
+    <rect x="49" y="84" width="34" height="34" rx="6"/><rect x="93" y="84" width="34" height="34" rx="6"/><rect x="137" y="84" width="34" height="34" rx="6"/><rect x="181" y="84" width="34" height="34" rx="6"/>
+    <rect x="49" y="128" width="34" height="34" rx="6"/><rect x="93" y="128" width="34" height="34" rx="6"/><rect x="137" y="128" width="34" height="34" rx="6"/><rect x="181" y="128" width="34" height="34" rx="6"/>
+    <rect x="49" y="172" width="34" height="34" rx="6"/><rect x="93" y="172" width="34" height="34" rx="6"/><rect x="137" y="172" width="34" height="34" rx="6"/><rect x="181" y="172" width="34" height="34" rx="6"/>
+    <rect x="49" y="216" width="34" height="34" rx="6"/><rect x="93" y="216" width="34" height="34" rx="6"/><rect x="137" y="216" width="34" height="34" rx="6"/><rect x="181" y="216" width="34" height="34" rx="6"/>
+  </g>
+  <rect x="137" y="128" width="34" height="34" rx="6" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+
+  <!-- arrow 1 -->
+  <line x1="240" y1="150" x2="272" y2="150" stroke="#46536b" stroke-width="2"/>
+  <polygon points="280,150 269,145 269,155" fill="#46536b"/>
+  <text class="zoom" x="260" y="170" text-anchor="middle">zoom</text>
+
+  <!-- block panel -->
+  <text class="h" x="404" y="44" text-anchor="middle">block</text>
+  <text class="sub" x="404" y="62" text-anchor="middle">(runs on one SM)</text>
+  <text class="warp" x="411" y="80" text-anchor="middle">warp = 32 threads, lockstep</text>
+  <line x1="300" y1="87" x2="522" y2="87" stroke="#b45309" stroke-width="1.5"/>
+  <line x1="300" y1="87" x2="300" y2="93" stroke="#b45309" stroke-width="1.5"/>
+  <line x1="522" y1="87" x2="522" y2="93" stroke="#b45309" stroke-width="1.5"/>
+  <g fill="#f59e0b">
+    <circle cx="306" cy="102" r="7"/><circle cx="336" cy="102" r="7"/><circle cx="366" cy="102" r="7"/><circle cx="396" cy="102" r="7"/><circle cx="426" cy="102" r="7"/><circle cx="456" cy="102" r="7"/><circle cx="486" cy="102" r="7"/><circle cx="516" cy="102" r="7"/>
+  </g>
+  <g fill="#0d1526">
+    <circle cx="306" cy="132" r="7"/><circle cx="336" cy="132" r="7"/><circle cx="366" cy="132" r="7"/><circle cx="396" cy="132" r="7"/><circle cx="426" cy="132" r="7"/><circle cx="456" cy="132" r="7"/><circle cx="486" cy="132" r="7"/><circle cx="516" cy="132" r="7"/>
+    <circle cx="306" cy="162" r="7"/><circle cx="336" cy="162" r="7"/><circle cx="366" cy="162" r="7"/><circle cx="396" cy="162" r="7"/><circle cx="426" cy="162" r="7"/><circle cx="456" cy="162" r="7"/><circle cx="486" cy="162" r="7"/><circle cx="516" cy="162" r="7"/>
+    <circle cx="306" cy="192" r="7"/><circle cx="336" cy="192" r="7"/><circle cx="366" cy="192" r="7"/><circle cx="396" cy="192" r="7"/><circle cx="426" cy="192" r="7"/><circle cx="456" cy="192" r="7"/><circle cx="486" cy="192" r="7"/><circle cx="516" cy="192" r="7"/>
+  </g>
+  <text class="sub" x="404" y="228" text-anchor="middle">up to 1024 threads per block</text>
+
+  <!-- arrow 2 -->
+  <line x1="530" y1="150" x2="562" y2="150" stroke="#46536b" stroke-width="2"/>
+  <polygon points="570,150 559,145 559,155" fill="#46536b"/>
+  <text class="zoom" x="550" y="170" text-anchor="middle">zoom</text>
+
+  <!-- thread panel -->
+  <text class="h" x="652" y="44" text-anchor="middle">thread</text>
+  <text class="sub" x="652" y="62" text-anchor="middle">(one stream)</text>
+  <circle cx="652" cy="140" r="16" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+  <text class="sub" x="652" y="184" text-anchor="middle">own program counter,</text>
+  <text class="sub" x="652" y="200" text-anchor="middle">reads/writes global memory</text>
+
+  <text class="foot" x="380" y="300" text-anchor="middle">example launch: 256 x 16 blocks of 32 threads = 131,072 threads</text>
+</svg>

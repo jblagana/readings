@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="t d">
+  <title id="t">Latency hiding by warp switching</title>
+  <desc id="d">Three warp timelines. While warp A waits for HBM, the scheduler runs warps B and C; when A resumes, B is waiting, and so on.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .lane { font-size: 12.5px; font-weight: 700; fill: #0d1526; }
+    .seg { font-size: 11px; font-weight: 700; }
+    .wait { font-size: 11px; font-weight: 600; fill: #46536b; }
+    .leg { font-size: 11.5px; fill: #46536b; }
+    .axis { font-size: 11.5px; fill: #46536b; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <!-- time axis -->
+  <line x1="70" y1="40" x2="690" y2="40" stroke="#46536b" stroke-width="1.5"/>
+  <polygon points="700,40 689,35.5 689,44.5" fill="#46536b"/>
+  <text class="axis" x="70" y="28">time</text>
+
+  <!-- warp A -->
+  <text class="lane" x="24" y="86">warp A</text>
+  <rect x="70" y="70" width="130" height="24" rx="4" fill="#10b981"/>
+  <text class="seg" x="135" y="86" text-anchor="middle" fill="#0d1526">compute</text>
+  <rect x="200" y="70" width="220" height="24" rx="4" fill="#dbe2ea"/>
+  <text class="wait" x="310" y="86" text-anchor="middle">waiting for HBM...</text>
+  <rect x="420" y="70" width="140" height="24" rx="4" fill="#10b981"/>
+  <text class="seg" x="490" y="86" text-anchor="middle" fill="#0d1526">compute</text>
+
+  <!-- warp B -->
+  <text class="lane" x="24" y="150">warp B</text>
+  <rect x="200" y="134" width="140" height="24" rx="4" fill="#10b981"/>
+  <text class="seg" x="270" y="150" text-anchor="middle" fill="#0d1526">compute</text>
+  <rect x="340" y="134" width="180" height="24" rx="4" fill="#dbe2ea"/>
+  <text class="wait" x="430" y="150" text-anchor="middle">waiting for HBM...</text>
+
+  <!-- warp C -->
+  <text class="lane" x="24" y="214">warp C</text>
+  <rect x="340" y="198" width="140" height="24" rx="4" fill="#10b981"/>
+  <text class="seg" x="410" y="214" text-anchor="middle" fill="#0d1526">compute</text>
+  <rect x="480" y="198" width="160" height="24" rx="4" fill="#dbe2ea"/>
+  <text class="wait" x="560" y="214" text-anchor="middle">waiting for HBM...</text>
+
+  <!-- legend -->
+  <rect x="70" y="252" width="14" height="14" rx="3" fill="#10b981"/>
+  <text class="leg" x="92" y="264">active (doing work)</text>
+  <rect x="210" y="252" width="14" height="14" rx="3" fill="#dbe2ea" stroke="#94a3b8"/>
+  <text class="leg" x="232" y="264">waiting for memory</text>
+
+  <text class="foot" x="380" y="292" text-anchor="middle">the scheduler switches resident warps in ~1 cycle — the stall is covered by other work, not removed</text>
+</svg>

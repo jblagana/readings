@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 640" role="img" aria-labelledby="t d">
+  <title id="t">A100 die: HBM stacks around a die of 108 streaming multiprocessors</title>
+  <desc id="d">A GPU die with six HBM memory stacks on its sides, four GPCs of SM tiles inside, and a zoomed-in box showing one SM: CUDA cores, shared memory, and warp schedulers.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 12px; fill: #46536b; }
+    .gpc { font-size: 10.5px; font-weight: 600; fill: #7d8798; letter-spacing: .06em; }
+    .hbm { font-size: 13px; font-weight: 700; fill: #ffffff; }
+    .bw { font-size: 11.5px; font-weight: 700; fill: #b45309; }
+    .cap { font-size: 12px; font-weight: 700; fill: #0d1526; }
+    .note { font-size: 11.5px; fill: #46536b; }
+  </style>
+
+  <!-- HBM stacks, left -->
+  <g>
+    <rect x="36" y="54" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="44" y="68" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="94" width="80" height="20" rx="3" fill="#10b981"/><rect x="44" y="120" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="146" width="80" height="20" rx="3" fill="#10b981"/>
+    <text class="hbm" x="84" y="50" text-anchor="middle">HBM</text>
+    <rect x="36" y="194" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="44" y="208" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="234" width="80" height="20" rx="3" fill="#10b981"/><rect x="44" y="260" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="286" width="80" height="20" rx="3" fill="#10b981"/>
+    <rect x="36" y="334" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="44" y="348" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="374" width="80" height="20" rx="3" fill="#10b981"/><rect x="44" y="400" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="44" y="426" width="80" height="20" rx="3" fill="#10b981"/>
+  </g>
+  <!-- HBM stacks, right -->
+  <g>
+    <rect x="628" y="54" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="636" y="68" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="94" width="80" height="20" rx="3" fill="#10b981"/><rect x="636" y="120" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="146" width="80" height="20" rx="3" fill="#10b981"/>
+    <text class="hbm" x="676" y="50" text-anchor="middle">HBM</text>
+    <rect x="628" y="194" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="636" y="208" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="234" width="80" height="20" rx="3" fill="#10b981"/><rect x="636" y="260" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="286" width="80" height="20" rx="3" fill="#10b981"/>
+    <rect x="628" y="334" width="96" height="112" rx="8" fill="#0d1526"/>
+    <rect x="636" y="348" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="374" width="80" height="20" rx="3" fill="#10b981"/><rect x="636" y="400" width="80" height="20" rx="3" fill="#f59e0b"/><rect x="636" y="426" width="80" height="20" rx="3" fill="#10b981"/>
+  </g>
+
+  <!-- bandwidth arrows -->
+  <g stroke="#b45309" stroke-width="2">
+    <line x1="134" y1="110" x2="166" y2="110"/>
+    <line x1="134" y1="250" x2="166" y2="250"/>
+    <line x1="134" y1="390" x2="166" y2="390"/>
+    <line x1="594" y1="110" x2="626" y2="110"/>
+    <line x1="594" y1="250" x2="626" y2="250"/>
+    <line x1="594" y1="390" x2="626" y2="390"/>
+  </g>
+  <g fill="#b45309">
+    <polygon points="166,110 157,105.5 157,114.5"/><polygon points="134,110 143,105.5 143,114.5"/>
+    <polygon points="166,250 157,245.5 157,254.5"/><polygon points="134,250 143,245.5 143,254.5"/>
+    <polygon points="166,390 157,385.5 157,394.5"/><polygon points="134,390 143,385.5 143,394.5"/>
+    <polygon points="626,110 617,105.5 617,114.5"/><polygon points="594,110 603,105.5 603,114.5"/>
+    <polygon points="626,250 617,245.5 617,254.5"/><polygon points="594,250 603,245.5 603,254.5"/>
+    <polygon points="626,390 617,385.5 617,394.5"/><polygon points="594,390 603,385.5 603,394.5"/>
+  </g>
+  <text class="bw" x="150" y="44" text-anchor="middle">~2 TB/s</text>
+  <text class="bw" x="610" y="44" text-anchor="middle">~2 TB/s</text>
+
+  <!-- die -->
+  <rect x="168" y="28" width="424" height="396" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="2"/>
+  <text class="h" x="380" y="62" text-anchor="middle">A100 die</text>
+  <text class="sub" x="380" y="82" text-anchor="middle">108 SMs, grouped into 4 GPCs</text>
+
+  <!-- GPC 1 (top-left) -->
+  <rect x="192" y="100" width="186" height="148" rx="8" fill="#ffffff" stroke="#46536b" stroke-width="1.2"/>
+  <text class="gpc" x="202" y="116">GPC</text>
+  <g fill="#e4e8ee" stroke="#46536b">
+    <rect x="211" y="124" width="44" height="30" rx="4"/><rect x="263" y="124" width="44" height="30" rx="4"/><rect x="315" y="124" width="44" height="30" rx="4"/>
+    <rect x="211" y="162" width="44" height="30" rx="4"/><rect x="263" y="162" width="44" height="30" rx="4"/><rect x="315" y="162" width="44" height="30" rx="4"/>
+    <rect x="211" y="200" width="44" height="30" rx="4"/><rect x="263" y="200" width="44" height="30" rx="4"/><rect x="315" y="200" width="44" height="30" rx="4"/>
+  </g>
+  <!-- GPC 2 (top-right) with highlighted SM -->
+  <rect x="382" y="100" width="186" height="148" rx="8" fill="#ffffff" stroke="#46536b" stroke-width="1.2"/>
+  <text class="gpc" x="392" y="116">GPC</text>
+  <g fill="#e4e8ee" stroke="#46536b">
+    <rect x="401" y="124" width="44" height="30" rx="4"/><rect x="453" y="124" width="44" height="30" rx="4"/>
+    <rect x="401" y="162" width="44" height="30" rx="4"/><rect x="453" y="162" width="44" height="30" rx="4"/>
+    <rect x="401" y="200" width="44" height="30" rx="4"/><rect x="453" y="200" width="44" height="30" rx="4"/><rect x="505" y="200" width="44" height="30" rx="4"/>
+  </g>
+  <rect x="505" y="124" width="44" height="30" rx="4" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+  <!-- GPC 3 (bottom-left) -->
+  <rect x="192" y="262" width="186" height="148" rx="8" fill="#ffffff" stroke="#46536b" stroke-width="1.2"/>
+  <text class="gpc" x="202" y="278">GPC</text>
+  <g fill="#e4e8ee" stroke="#46536b">
+    <rect x="211" y="286" width="44" height="30" rx="4"/><rect x="263" y="286" width="44" height="30" rx="4"/><rect x="315" y="286" width="44" height="30" rx="4"/>
+    <rect x="211" y="324" width="44" height="30" rx="4"/><rect x="263" y="324" width="44" height="30" rx="4"/><rect x="315" y="324" width="44" height="30" rx="4"/>
+    <rect x="211" y="362" width="44" height="30" rx="4"/><rect x="263" y="362" width="44" height="30" rx="4"/><rect x="315" y="362" width="44" height="30" rx="4"/>
+  </g>
+  <!-- GPC 4 (bottom-right) -->
+  <rect x="382" y="262" width="186" height="148" rx="8" fill="#ffffff" stroke="#46536b" stroke-width="1.2"/>
+  <text class="gpc" x="392" y="278">GPC</text>
+  <g fill="#e4e8ee" stroke="#46536b">
+    <rect x="401" y="286" width="44" height="30" rx="4"/><rect x="453" y="286" width="44" height="30" rx="4"/><rect x="505" y="286" width="44" height="30" rx="4"/>
+    <rect x="401" y="324" width="44" height="30" rx="4"/><rect x="453" y="324" width="44" height="30" rx="4"/><rect x="505" y="324" width="44" height="30" rx="4"/>
+    <rect x="401" y="362" width="44" height="30" rx="4"/><rect x="453" y="362" width="44" height="30" rx="4"/><rect x="505" y="362" width="44" height="30" rx="4"/>
+  </g>
+  <text class="sub" x="380" y="416" text-anchor="middle">each tile is one SM</text>
+
+  <!-- zoom connector -->
+  <path d="M549 139 H610 V470" fill="none" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+  <!-- SM detail box -->
+  <rect x="36" y="470" width="688" height="148" rx="12" fill="#ffffff" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="h" x="60" y="500">Inside one SM (zoom)</text>
+
+  <g fill="#fde68a" stroke="#b45309">
+    <rect x="60" y="518" width="26" height="26" rx="4"/><rect x="92" y="518" width="26" height="26" rx="4"/><rect x="124" y="518" width="26" height="26" rx="4"/><rect x="156" y="518" width="26" height="26" rx="4"/>
+    <rect x="188" y="518" width="26" height="26" rx="4"/><rect x="220" y="518" width="26" height="26" rx="4"/><rect x="252" y="518" width="26" height="26" rx="4"/><rect x="284" y="518" width="26" height="26" rx="4"/>
+  </g>
+  <text class="cap" x="60" y="566">128 CUDA cores</text>
+  <text class="note" x="60" y="582">threads run in warps of 32, in lockstep (SIMT)</text>
+
+  <rect x="350" y="518" width="170" height="26" rx="6" fill="#10b981"/>
+  <text class="cap" x="350" y="566">shared memory + L1</text>
+  <text class="note" x="350" y="582">a fast tile, private to this SM</text>
+
+  <g fill="#e4e8ee" stroke="#46536b">
+    <rect x="580" y="518" width="26" height="26" rx="4"/><rect x="612" y="518" width="26" height="26" rx="4"/><rect x="644" y="518" width="26" height="26" rx="4"/><rect x="676" y="518" width="26" height="26" rx="4"/>
+  </g>
+  <text class="cap" x="580" y="566">warp schedulers</text>
+  <text class="note" x="580" y="582">switch warps in ~1 cycle</text>
+</svg>

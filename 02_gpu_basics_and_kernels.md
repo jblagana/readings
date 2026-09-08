@@ -30,6 +30,11 @@ interns who each do one tiny thing, but a million tiny things happen per
 hour. Grid optimization is full of "a million tiny things": multiply
 $10^7$ non-zeros, run 2,000 contingency cases, sweep 100,000 buses.
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_cpu_vs_gpu.svg' | relative_url }}" alt="A CPU with four large cores and caches on the left, versus a GPU with a grid of many small cores and an HBM memory bar on the right" width="760">
+  <figcaption>Two strategies for the same transistor budget. A CPU buys speed per instruction — deep pipelines, big caches, branch prediction. A GPU buys total work per second — thousands of threads kept in flight, so a slow memory read is covered by other warps while it resolves.</figcaption>
+</figure>
+
 **Amdahl's law** *(glossary)* sets the ceiling: if 20% of a solver is
 fundamentally serial (e.g., a sparse *factorization* on one device), then no
 matter how many GPUs you add, total speedup $\le 1/0.2 = 5\times$. This
@@ -49,6 +54,11 @@ full-rate double, which is why this package's kernels use `double`.
 ---
 
 ## 2. Inside the GPU (just enough to read a kernel)
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_a100_die.svg' | relative_url }}" alt="An A100 die with six HBM memory stacks on its sides, four GPCs of SM tiles inside, and a zoomed box showing one SM: CUDA cores, shared memory, and warp schedulers" width="760">
+  <figcaption>The A100 die. HBM stacks wrap the silicon and feed it at roughly 2 TB/s; the compute lives in 108 streaming multiprocessors. The zoomed SM is where your kernel code actually runs — CUDA cores grouped into 32-thread warps, a private fast shared-memory tile, and the schedulers that hide latency.</figcaption>
+</figure>
 
 - **SM** *(glossary: streaming multiprocessor)*: the GPU's "core" — dozens of
   CUDA cores, a shared memory tile, schedulers. An A100 has 108 SMs.
@@ -71,6 +81,21 @@ full-rate double, which is why this package's kernels use `double`.
   `--use_fast_math` (reciprocals, denormals-as-zero, FMA contraction) is fine
   for ML, *risky* for power-flow convergence — do not add it to 03 without
   checking the tolerance.
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_kernel_hierarchy.svg' | relative_url }}" alt="Kernel launch hierarchy: a grid of blocks, a zoomed block of thread dots with one warp bracketed, and a single thread" width="760">
+  <figcaption>How a kernel launch maps onto the hardware. A launch is a grid of blocks; each block runs on exactly one SM (which is why blocks can use shared memory); and the hardware schedules a block's threads in warps of 32 that execute in lockstep.</figcaption>
+</figure>
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_coalesced_access.svg' | relative_url }}" alt="Coalesced versus strided memory access: consecutive thread reads merge into one transaction, strided reads cause 32 transactions" width="760">
+  <figcaption>Why index order matters. A warp's 32 memory requests arrive together, and the memory unit merges requests to consecutive addresses into one transaction. Stride by 4 and the same 32 reads cost 32 separate transactions — up to 10x the memory work.</figcaption>
+</figure>
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_latency_hiding.svg' | relative_url }}" alt="Three warp timelines: while warp A waits for HBM, the scheduler runs warps B and C" width="760">
+  <figcaption>Latency hiding, frame by frame. While warp A stalls on HBM, the scheduler runs warps B and C on the same SM. The stall is not removed — it is covered. If too few warps are resident, the bubbles become visible: "not enough parallelism".</figcaption>
+</figure>
 
 *(glossary: SM, warp, thread block, shared memory, global memory, HBM,
 coalesced access, launch overhead, roofline, bandwidth-bound, latency-bound,
