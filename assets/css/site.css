@@ -636,6 +636,15 @@ blockquote {
     font-size: 21px;
   }
 
+}
+
+/* ---------- mobile header: burger + dropdown.
+   Must match the theme's 600px breakpoint, where the checkbox-hack nav
+   (label + .menu-icon shown, .trigger hidden until checked) activates.
+   The 640px block above only carries content rules — header rules in a
+   wider window fight the theme's desktop float layout in 601-640px. ---------- */
+
+@media screen and (max-width: 600px) {
   .site-header {
     min-height: 58px;
   }
@@ -647,19 +656,47 @@ blockquote {
     line-height: 57px;
   }
 
+  /* Closed state: just the 40px burger button. The panel chrome lives on
+     the open .trigger below — putting min-width/background/border on
+     .site-nav made the closed header show a 252px-wide empty card next to
+     the burger. */
   .site-nav {
     top: 9px;
-    right: 12px;
-    min-width: 252px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    box-shadow: 0 18px 40px -12px rgba(13, 21, 38, 0.3);
+    right: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .site-nav label[for="nav-trigger"] {
     width: 40px;
     height: 40px;
+    margin-left: 4px;
+    border-radius: 10px;
+    transition: background-color 0.15s ease;
+  }
+
+  .site-nav label[for="nav-trigger"]:hover {
+    background: #edf0f5;
+  }
+
+  .site-nav .menu-icon > svg {
+    width: 24px;
+    height: 20px;
+    fill: var(--navy);
+  }
+
+  /* Open state: the dropdown panel appears under the burger. */
+  .site-nav input:checked ~ .trigger {
+    display: block;
+    min-width: 252px;
+    margin-top: 6px;
+    padding: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 18px 40px -12px rgba(13, 21, 38, 0.3);
   }
 
   .site-nav .page-link {
