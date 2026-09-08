@@ -53,7 +53,8 @@ node tools/check_glossary_tooltips.js            # sanity-check JSON + matcher
 - `04_glossary.md` remains the single source of truth;
   `tools/build_glossary_terms.py` parses it and writes `_data/glossary.json`
   (terms + curated match patterns per term).
-- `_includes/head.html` injects that JSON as `window.READINGS_GLOSSARY`;
+- `_includes/head.html` injects that JSON (`site.data.glossary | jsonify`) as
+  `window.READINGS_GLOSSARY`;
   `assets/js/glossary_tooltips.js` wraps term occurrences in `#main` with a
   `.gt-term` span and shows a shared `.gt-tip` tooltip (styled in
   `assets/css/site.css`).

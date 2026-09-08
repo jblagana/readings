@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link type="application/atom+xml" rel="alternate" href="{{ '/feed.xml' | relative_url }}" title="{{ site.title }}">
   {% unless page.no_tooltips %}
-  <script>window.READINGS_GLOSSARY = {{ site.glossary | jsonify | replace: '</', '<\/' }};</script>
+  <script>window.READINGS_GLOSSARY = {{ site.data.glossary | jsonify | replace: '</', '<\/' }};</script>
   <script src="{{ '/assets/js/glossary_tooltips.js' | relative_url }}" defer></script>
   {% endunless %}
 </head>
