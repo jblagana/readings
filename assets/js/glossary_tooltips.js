@@ -11,15 +11,17 @@
        from the rendered page — the inline tooltips replace them;
      - walks the text nodes of the page's content root and wraps each
        glossary-term occurrence in <span class="gt-term" tabindex="0"
-       data-gt="i">, carrying a small superscript ¹ (code, pre and form
-       controls are never touched). The root is resolved defensively —
+       role="button" data-gt="i">, carrying a small superscript ¹ (code,
+       pre and form controls are never touched). The root is resolved defensively —
        #main, #main-content, <main class="page-content">, any <main>,
        then <body> — because the minima theme ships an id-less <main>.
         Text nodes are snapshotted before wrapping: replacing the node a
         TreeWalker just returned detaches the walker and would stop the
         scan after the very first match on the page;
      - shows the term's glossary definition (Formal + Plain) in one
-       shared tooltip on hover or keyboard focus;
+       shared tooltip, opened on click (or Enter/Space on a focused
+       term); clicking the term again, clicking away, or Escape closes
+       it — hover no longer opens it;
      - re-renders $...$ math inside the tooltip and inside
        client-side-injected content via KaTeX auto-render (loaded in
        _includes/head.html); a no-op when KaTeX is not available;
@@ -186,6 +188,7 @@
       span.className = 'gt-term';
       span.textContent = text.slice(h.start, h.end);
       span.setAttribute('tabindex', '0');
+      span.setAttribute('role', 'button');
       span.setAttribute('data-gt', String(h.entry.__i));
       frag.appendChild(span);
       cursor = h.end;
@@ -223,7 +226,7 @@
    * ------------------------------------------------------------------ */
 
   var tip = null, tipTerm = null, rows = [];
-  var activeEl = null, hideTimer = null;
+  var activeEl = null;
 
   function ensureTip() {
     if (tip) return;
@@ -272,7 +275,6 @@
   function showFor(el) {
     var entry = data[Number(el.getAttribute('data-gt'))] || null;
     if (!entry) return;
-    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
     ensureTip();
     tipTerm.textContent = entry.term;
     rows[0].label.textContent = 'Formal';
@@ -303,11 +305,12 @@
     activeEl = null;
   }
 
-  /* Small grace period so moving between adjacent terms (or off to
-     nearby text) does not flicker the tooltip. */
-  function hideSoon() {
-    if (hideTimer) return;
-    hideTimer = setTimeout(function () { hideTimer = null; hideNow(); }, 90);
+  /* Click (or Enter/Space on the focused term) toggles the tooltip for
+     that term; clicking a different term switches to it. Hover no longer
+     opens the tooltip — it is purely reference, opened on demand. */
+  function toggleFor(el) {
+    if (activeEl === el) hideNow();
+    else showFor(el);
   }
 
   function closestTerm(t) {
@@ -319,23 +322,17 @@
   }
 
 
-  document.addEventListener('mouseover', function (ev) {
+  document.addEventListener('click', function (ev) {
     var el = closestTerm(ev.target);
-    if (el) showFor(el);
-    else if (activeEl) hideSoon();
-  });
-  document.addEventListener('mouseout', function (ev) {
-    if (activeEl && closestTerm(ev.target) === activeEl) hideSoon();
-  });
-  document.addEventListener('focusin', function (ev) {
-    var el = closestTerm(ev.target);
-    if (el) showFor(el);
-  });
-  document.addEventListener('focusout', function (ev) {
-    if (activeEl && closestTerm(ev.target) === activeEl) hideSoon();
+    if (el) toggleFor(el);
+    else if (activeEl) hideNow();
   });
   document.addEventListener('keydown', function (ev) {
-    if (ev.key === 'Escape') hideNow();
+    if (ev.key === 'Escape') { hideNow(); return; }
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      var el = closestTerm(ev.target);
+      if (el) { ev.preventDefault(); toggleFor(el); }
+    }
   });
   window.addEventListener('scroll', function () {
     if (activeEl) position(activeEl);

@@ -40,8 +40,9 @@ the next quiz.
 
 ### Glossary tooltips
 
-Glossary terms in the posts light up on hover (or keyboard focus) with their
-formal + plain definitions, without leaving the page. The tooltip data is
+Glossary terms in the posts open their formal + plain definition in a
+tooltip on click (or focus + Enter), without leaving the page. The tooltip
+data is
 generated, not hand-maintained:
 
 ```bash

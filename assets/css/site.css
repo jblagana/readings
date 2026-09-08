@@ -1262,7 +1262,7 @@ blockquote {
    ========================================================================== */
 .gt-term {
   border-bottom: 1px dotted var(--amber-deep);
-  cursor: help;
+  cursor: pointer;
   border-radius: 2px;
   transition: background-color .12s ease, border-color .12s ease;
 }

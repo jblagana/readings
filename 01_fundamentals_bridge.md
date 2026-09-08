@@ -15,8 +15,8 @@ is rebuilt from that foundation, always in two registers:
 1. **Formal** — the definition as it appears in papers.
 2. **Plain** — what it actually means, with a comparison to something familiar.
 
-Glossary terms carry a dotted underline and a small ¹ — hover one (or
-focus it with the keyboard) to see its definition. Every term is defined
+Glossary terms carry a dotted underline and a small ¹ — click one (or
+focus it and press Enter) to see its definition. Every term is defined
 formally and in plain language in `04_glossary.md`.
 
 ---
