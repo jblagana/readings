@@ -20,6 +20,9 @@
         scan after the very first match on the page;
      - shows the term's glossary definition (Formal + Plain) in one
        shared tooltip on hover or keyboard focus;
+     - re-renders $...$ math inside the tooltip and inside
+       client-side-injected content via KaTeX auto-render (loaded in
+       _includes/head.html); a no-op when KaTeX is not available;
      - the tooltip is pure reference — it does not link anywhere.
 
    Matching: one boundary-guarded regex per curated pattern; on overlap
@@ -278,6 +281,12 @@
     rows[1].label.textContent = 'Plain';
     rows[1].body.textContent = entry.plain || '';
     rows[1].row.style.display = entry.plain ? '' : 'none';
+    /* Definitions may carry $...$ math (KaTeX auto-render, see head.html).
+       The bodies were just reset through textContent, so (re)render them
+       now; no-op when KaTeX is not available. */
+    if (typeof window.renderReadingsMath === 'function') {
+      window.renderReadingsMath(tip);
+    }
     if (activeEl !== el) {
       activeEl = el;
       tip.classList.add('is-visible');
@@ -386,6 +395,9 @@
             if (a.nodeType === 1 && !SKIP_TAGS[a.nodeName]) {
               stripGlossaryMarkers(a);
               scan(a);
+              if (typeof window.renderReadingsMath === 'function') {
+                window.renderReadingsMath(a);
+              }
             }
           }
         }

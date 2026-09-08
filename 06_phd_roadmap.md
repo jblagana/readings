@@ -95,7 +95,7 @@ direction); maintenance of the reproducibility artifacts (Dockerfile,
 **Milestones that gate progress (be honest about these):**
 | Gate | When | If it fails |
 |---|---|---|
-| Batched kernel ≥ 10× over sequential at batch ≥ 256 | end of Sem 1 | revisit memory layout (SoA vs AoS) before continuing |
+| Batched kernel $\ge 10\times$ over sequential at batch $\ge 256$ | end of Sem 1 | revisit memory layout (SoA vs AoS) before continuing |
 | Paper 1 submitted | end of Sem 2 | cut scope to a workshop-length result; submit anyway |
 | DERMS system beats a communication-aware baseline | end of Sem 3 | switch mainline to direction C (UC) — same kernels, different outer loop |
 | TEP inner layer runs end-to-end | end of Sem 5 | shrink to a 300-bus TEP instance; the *method* transfer is the contribution, scale is the story |

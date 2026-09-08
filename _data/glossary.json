@@ -72,7 +72,7 @@
   },
   {
     "term": "transmission line (π model)",
-    "formal": "a line represented by series impedance z = r + jx and (optional) shunt admittances at each end.",
+    "formal": "a line represented by series impedance $z = r + jx$ and (optional) shunt admittances at each end.",
     "plain": "the wire has resistance (r, real losses/heat) and inductance (x, the angle/voltage dance); capacitive charging is optional for short lines.",
     "matches": [
       "transmission line (π model)",
@@ -82,7 +82,7 @@
   },
   {
     "term": "AC power flow (Newton–Raphson)",
-    "formal": "solve S_i = V_i·(Ybus·V)_i for V via successive linearization: J·ΔV = −F, J the Jacobian.",
+    "formal": "solve $S_i = V_i \\cdot (Y_{\\text{bus}} V)_i$ for $V$ via successive linearization: $J \\Delta V = -F$, $J$ the Jacobian.",
     "plain": "guess the voltages, compute the error, take a Newton step, repeat 4–8 times. The \"gold standard\" answer every other method is judged against.",
     "matches": [
       "AC power flow (Newton–Raphson)",
@@ -122,7 +122,7 @@
   },
   {
     "term": "DC power flow",
-    "formal": "linearization of AC power flow: |V| ≡ 1, small angles, Q and losses dropped; injections become the linear system B·θ = P.",
+    "formal": "linearization of AC power flow: $|V| \\equiv 1$, small angles, $Q$ and losses dropped; injections become the linear system $B \\theta = P$.",
     "plain": "",
     "matches": [
       "DC power flow",
@@ -144,7 +144,7 @@
   },
   {
     "term": "state estimation (WLS)",
-    "formal": "estimate bus voltages by minimizing the weighted sum of squared measurement residuals, x̂ = argmin (z − h(x))ᵀW(z − h(x)).",
+    "formal": "estimate bus voltages by minimizing the weighted sum of squared measurement residuals, $\\hat{x} = \\arg\\min (z - h(x))^\\top W (z - h(x))$.",
     "plain": "the grid has more meters than unknowns; this fuses the noisy readings into the best-guess \"what is actually happening right now\" picture.",
     "matches": [
       "state estimation (WLS)",
@@ -153,7 +153,7 @@
   },
   {
     "term": "weighted least squares (WLS)",
-    "formal": "least-squares estimation in which each residual is weighted by its precision (inverse variance); linear closed form x̂ = (HᵀWH)⁻¹HᵀWz.",
+    "formal": "least-squares estimation in which each residual is weighted by its precision (inverse variance); linear closed form $\\hat{x} = (H^\\top W H)^{-1} H^\\top W z$.",
     "plain": "fit a line through noisy points, but let the trustworthy (low-noise) readings count more — the standard way to fuse many redundant meter measurements into one estimate.",
     "matches": [
       "weighted least squares (WLS)",
@@ -220,7 +220,7 @@
   },
   {
     "term": "constraint",
-    "formal": "an equation g(x) = 0 or inequality h(x) ≤ 0 that admissible solutions must satisfy.",
+    "formal": "an equation $g(x) = 0$ or inequality $h(x) \\le 0$ that admissible solutions must satisfy.",
     "plain": "the rules of the game; physics (balance, limits) and regulation both show up as constraints.",
     "matches": [
       "constraint",
@@ -270,8 +270,8 @@
   },
   {
     "term": "duality / KKT conditions",
-    "formal": "the dual problem bounds the primal's optimum; at an optimum (under mild conditions), primal variables, dual variables (multipliers λ), and complementarity (λ·h = 0) satisfy the KKT system.",
-    "plain": "every constraint carries a shadow price λ; at the optimum, \"marginal cost = marginal value\" everywhere. In power markets the λ of the power-balance constraints are the LMPs.",
+    "formal": "the dual problem bounds the primal's optimum; at an optimum (under mild conditions), primal variables, dual variables (multipliers $\\lambda$), and complementarity ($\\lambda h = 0$) satisfy the KKT system.",
+    "plain": "every constraint carries a shadow price $\\lambda$; at the optimum, \"marginal cost = marginal value\" everywhere. In power markets the $\\lambda$ of the power-balance constraints are the LMPs.",
     "matches": [
       "duality / KKT conditions",
       "duality",
@@ -662,7 +662,7 @@
   },
   {
     "term": "Amdahl's law",
-    "formal": "speedup ≤ 1/(s + (1−s)/p) for serial fraction s and p processors.",
+    "formal": "speedup $\\le 1/(s + (1 - s)/p)$ for serial fraction $s$ and $p$ processors.",
     "plain": "if 20% of your solver can't be parallelized, a thousand GPUs give you at most 5×. Every honest GPU paper implicitly reports its s.",
     "matches": [
       "Amdahl's law",
@@ -673,7 +673,7 @@
   {
     "term": "double precision (FP64)",
     "formal": "64-bit IEEE-754 floating point (~15–16 decimal digits); required for convergence-critical numerical work.",
-    "plain": "16 digits of care; power-flow tolerances (~1e-10) die in 7-digit float. Data-center GPUs (A100: full-rate FP64) are the norm in this field for this reason.",
+    "plain": "16 digits of care; power-flow tolerances ($\\sim 10^{-10}$) die in 7-digit float. Data-center GPUs (A100: full-rate FP64) are the norm in this field for this reason.",
     "matches": [
       "double precision (FP64)",
       "double precision",

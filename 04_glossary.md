@@ -56,12 +56,13 @@ low power factor means you're paying for pressure, not water.
 friendly and all papers comparable.
 
 **transmission line (π model)** — *Formal:* a line represented by series
-impedance z = r + jx and (optional) shunt admittances at each end. *Plain:*
+impedance $z = r + jx$ and (optional) shunt admittances at each end. *Plain:*
 the wire has resistance (r, real losses/heat) and inductance (x, the
 angle/voltage dance); capacitive charging is optional for short lines.
 
-**AC power flow (Newton–Raphson)** — *Formal:* solve S_i = V_i·(Ybus·V)_i
-for V via successive linearization: J·ΔV = −F, J the Jacobian. *Plain:*
+**AC power flow (Newton–Raphson)** — *Formal:* solve
+$S_i = V_i \cdot (Y_{\text{bus}} V)_i$ for $V$ via successive
+linearization: $J \Delta V = -F$, $J$ the Jacobian. *Plain:*
 guess the voltages, compute the error, take a Newton step, repeat 4–8 times.
 The "gold standard" answer every other method is judged against.
 
@@ -84,8 +85,9 @@ neighbours" until the voltages settle. Slower to converge, but one sweep is
 embarrassingly parallel — exactly the shape the first GPU power-flow
 kernels exploited.
 
-**DC power flow** — *Formal:* linearization of AC power flow: |V| ≡ 1, small
-angles, Q and losses dropped; injections become the linear system B·θ = P.
+**DC power flow** — *Formal:* linearization of AC power flow: $|V| \equiv 1$,
+small angles, $Q$ and losses dropped; injections become the linear system
+$B \theta = P$.
 
 **N-1 contingency** — *Formal:* a single element (line, transformer,
 generator) outage; the system must remain feasible (within limits) after
@@ -95,13 +97,15 @@ parallel" work on GPUs.
 
 **state estimation (WLS)** — *Formal:* estimate bus voltages by minimizing
 the weighted sum of squared measurement residuals,
-x̂ = argmin (z − h(x))ᵀW(z − h(x)). *Plain:* the grid has more meters than
+$\hat{x} = \arg\min (z - h(x))^\top W (z - h(x))$. *Plain:* the grid has
+more meters than
 unknowns; this fuses the noisy readings into the best-guess "what is
 actually happening right now" picture.
 
 **weighted least squares (WLS)** — *Formal:* least-squares estimation in
 which each residual is weighted by its precision (inverse variance);
-linear closed form x̂ = (HᵀWH)⁻¹HᵀWz. *Plain:* fit a line through noisy
+linear closed form $\hat{x} = (H^\top W H)^{-1} H^\top W z$. *Plain:* fit
+a line through noisy
 points, but let the trustworthy (low-noise) readings count more — the
 standard way to fuse many redundant meter measurements into one estimate.
 
@@ -140,8 +144,8 @@ maximize) over the decision variables x. *Plain:* "the score" — cost,
 losses, risk, emissions; everything else in the model exists to keep the
 score from being cheated.
 
-**constraint** — *Formal:* an equation g(x) = 0 or inequality h(x) ≤ 0 that
-admissible solutions must satisfy. *Plain:* the rules of the game; physics
+**constraint** — *Formal:* an equation $g(x) = 0$ or inequality
+$h(x) \le 0$ that admissible solutions must satisfy. *Plain:* the rules of the game; physics
 (balance, limits) and regulation both show up as constraints.
 
 **LP / QP** — *Formal:* linear (quadratic) objective + linear constraints.
@@ -172,10 +176,11 @@ certificates (dual bounds, multiple starts).
 
 **duality / KKT conditions** — *Formal:* the dual problem bounds the
 primal's optimum; at an optimum (under mild conditions), primal variables,
-dual variables (multipliers λ), and complementarity (λ·h = 0) satisfy the
-KKT system. *Plain:* every constraint carries a shadow price λ; at the
-optimum, "marginal cost = marginal value" everywhere. In power markets the
-λ of the power-balance constraints **are** the LMPs.
+dual variables (multipliers $\lambda$), and complementarity
+($\lambda h = 0$) satisfy the KKT system. *Plain:* every constraint
+carries a shadow price $\lambda$; at the optimum, "marginal cost =
+marginal value" everywhere. In power markets the $\lambda$ of the
+power-balance constraints **are** the LMPs.
 
 **simplex / interior point (IPM)** — *Formal:* two classic LP solvers:
 simplex walks vertices of the feasible polytope; IPM (barrier methods)
@@ -410,14 +415,14 @@ capped by either the machines (FLOPs) or the forklift (memory). SpMV and
 power-flow sweeps live under the forklift's shadow — add more interns and
 nothing changes; move bytes faster and everything does.
 
-**Amdahl's law** — *Formal:* speedup ≤ 1/(s + (1−s)/p) for serial fraction
-s and p processors. *Plain:* if 20% of your solver can't be parallelized,
+**Amdahl's law** — *Formal:* speedup $\le 1/(s + (1 - s)/p)$ for serial
+fraction $s$ and $p$ processors. *Plain:* if 20% of your solver can't be parallelized,
 a thousand GPUs give you at most 5×. Every honest GPU paper implicitly
 reports its s.
 
 **double precision (FP64)** — *Formal:* 64-bit IEEE-754 floating point
 (~15–16 decimal digits); required for convergence-critical numerical work.
-*Plain:* 16 digits of care; power-flow tolerances (~1e-10) die in 7-digit
+*Plain:* 16 digits of care; power-flow tolerances ($\sim 10^{-10}$) die in 7-digit
 float. Data-center GPUs (A100: full-rate FP64) are the norm in this field
 for this reason.
 

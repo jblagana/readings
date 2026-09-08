@@ -15,6 +15,34 @@
   <link type="application/atom+xml" rel="alternate" href="{{ '/feed.xml' | relative_url }}" title="{{ site.title }}">
   {% unless page.no_tooltips %}
   <script>window.READINGS_GLOSSARY = {{ site.data.glossary | jsonify | replace: '</', '<\/' }};</script>
-  <script src="{{ '/assets/js/glossary_tooltips.js?v=5' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/glossary_tooltips.js?v=6' | relative_url }}" defer></script>
   {% endunless %}
+
+  <!-- KaTeX (pinned CDN build): renders the $...$ / $$...$$ equations and
+       powers of ten used in the .md sources. renderReadingsMath() is the
+       shared entry point — it also runs over the tooltip bodies and over
+       client-side-injected content from assets/js/glossary_tooltips.js.
+       Fails soft: if the CDN is unreachable the raw $...$ text stays
+       readable and nothing else on the page is affected. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/contrib/auto-render.min.js"></script>
+  <script>
+    window.READINGS_MATH = {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false }
+      ],
+      ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code',
+                    'option', 'select', 'button', 'kbd', 'samp']
+    };
+    window.renderReadingsMath = function (el) {
+      if (el && typeof window.renderMathInElement === 'function') {
+        window.renderMathInElement(el, window.READINGS_MATH);
+      }
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      window.renderReadingsMath(document.body);
+    });
+  </script>
 </head>

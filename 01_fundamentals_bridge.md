@@ -44,10 +44,11 @@ Three nested problems (this package keeps them straight):
 | **Security** | Does it still work if one line/generator fails? | seconds–hours | N-1 constraints (Sec. 6) |
 | **Planning** | What should we *build* over the next 5–30 years? | years | Investment models (Sec. 8) |
 
-**Why "large-scale"?** A national transmission network has 10⁴–10⁵ buses and
-10⁵–10⁶ branch constraints; a realistic SCOPF multiplies that by hundreds to
-thousands of contingency scenarios; a planning study multiplies by years ×
-scenarios; a DERMS can coordinate 10³–10⁶ distributed devices. The
+**Why "large-scale"?** A national transmission network has $10^4$–$10^5$
+buses and $10^5$–$10^6$ branch constraints; a realistic SCOPF multiplies
+that by hundreds to thousands of contingency scenarios; a planning study
+multiplies by years × scenarios; a DERMS can coordinate $10^3$–$10^6$
+distributed devices. The
 *computational* question of the PhD era is: **can a GPU (or GPU cluster) solve
 these fast enough for the timescale at which they matter?** That is the entire
 field you are entering.
@@ -58,10 +59,11 @@ field you are entering.
 
 ### 2.1 Complex power
 
-Formal: for voltage phasor V = |V|∠θ and current phasor I = |I|∠φ, complex
-power is S = V I* = P + jQ (W), with P = |V||I| cos(θ−φ) the **active power**
-and Q = |V||I| sin(θ−φ) the **reactive power**. cos(θ−φ) is the **power
-factor**.
+Formal: for voltage phasor $V = |V|\angle\theta$ and current phasor
+$I = |I|\angle\varphi$, complex power is $S = V I^* = P + jQ$ (W), with
+$P = |V| |I| \cos(\theta - \varphi)$ the **active power** and
+$Q = |V| |I| \sin(\theta - \varphi)$ the **reactive power**.
+$\cos(\theta - \varphi)$ is the **power factor**.
 
 Plain: P does the real work (light, motor, heat). Q sloshes back and forth,
 maintaining the electric and magnetic fields the system needs — like pumping
@@ -99,11 +101,12 @@ in fully parallel, memory-bandwidth-bound kernels (see
 
 ## 3. Power flow: the workhorse "given the grid, what happens?"
 
-Formal: the **power flow (load flow)** problem: given the network (Ybus), the
-loads S_i, and generator settings, solve the nonlinear equations
-S_i = V_i (Σ_j Y_ij V_j) for the unknown bus voltages V. Bus types:
-**swing** (V and angle fixed — the reference), **PV** (P and |V| controlled),
-**PQ** (P and Q specified, V unknown).
+Formal: the **power flow (load flow)** problem: given the network (Ybus),
+the loads $S_i$, and generator settings, solve the nonlinear equations
+$S_i = V_i \left(\sum_j Y_{ij} V_j\right)$ for the unknown bus voltages
+$V$. Bus types: **swing** ($V$ and angle fixed — the reference),
+**PV** ($P$ and $|V|$ controlled), **PQ** ($P$ and $Q$ specified, $V$
+unknown).
 
 Plain: "If everyone injects/loads what they inject/load, where do all the
 voltages and flows end up?" The traffic-network analogue: given the demands,
@@ -113,8 +116,9 @@ iterate.
 Two classic iterative solvers (both appear in the GPU literature):
 
 - **Newton–Raphson** *(glossary: Newton method)*: linearize at the current
-  estimate → solve a *sparse* linear system J·ΔV = −F (J = Jacobian) →
-  update. Quadratic convergence (4–8 iterations even for huge systems), but
+  estimate → solve a *sparse* linear system $J \Delta V = -F$
+  ($J$ = Jacobian) → update. Quadratic convergence (4–8 iterations even for
+  huge systems), but
   each step needs a sparse matrix *factorization* — the hardest part to
   parallelize because of **fill-in** *(glossary)*.
 - **Gauss–Seidel / Jacobi** *(glossary)*: a simpler row-wise update that reuses
@@ -128,9 +132,10 @@ assume |V| = 1, small angle differences). It becomes a *linear* system, which
 is why **DC-OPF** is the workhorse of market clearing — and why
 "GPU-accelerated DC-OPF" is an active subtopic (03, Subtopic B).
 
-**Why scale is hard.** State dimension is O(N) for N buses, but the real cost
-is (i) the sparse factorization whose fill-in can grow like O(N^{1.5}–N²) in
-meshed networks, and (ii) **N-1 contingency analysis** *(glossary)*, which
+**Why scale is hard.** State dimension is $O(N)$ for $N$ buses, but the real
+cost is (i) the sparse factorization whose fill-in can grow like
+$O(N^{1.5})$–$O(N^2)$ in meshed networks, and (ii) **N-1 contingency
+analysis** *(glossary)*, which
 multiplies the whole thing by hundreds to thousands of cases. These two facts
 — *sparse, iterative, replicated across many scenarios* — are precisely the
 structure a GPU likes.
@@ -146,7 +151,8 @@ noisy) into the best estimate of the system state (bus voltages), typically by
 **N-1 contingency** (one line or generator lost) keeps all constraints
 satisfied.
 
-Plain: the grid has ~10⁵–10⁶ meters but ~10⁴–10⁵ unknown voltages; state
+Plain: the grid has $\sim 10^5$–$10^6$ meters but $\sim 10^4$–$10^5$
+unknown voltages; state
 estimation is "triangulation with error bars". Security analysis is "crash
 testing": remove every line, one at a time, and check nothing overloads.
 *GPU angle:* N-1 is thousands of independent small solves — the single most
@@ -252,7 +258,8 @@ transmission operator and *above* individual inverters. The timescale ladder
 | **Intraday** (1–60 min) | re-dispatch, re-planning | OPF / MPC |
 | **Real-time** (sub-second–1 s) | inverter setpoints, voltage support | fast OPF, droop control, ADMM |
 
-**Why compute matters here.** A large DERMS coordinates 10³–10⁶ devices at
+**Why compute matters here.** A large DERMS coordinates $10^3$–$10^6$
+devices at
 seconds-scale cadence; distribution networks are *radial and numerous*
 (hundreds of feeders, each a small OPF — embarrassingly parallel across
 feeders, see `cuda_kernels/02_spmv.cu`); and the real-time tier needs
@@ -281,7 +288,8 @@ Plain: "Which wind farm, which battery, which new line — over 20 years —
 gives the cheapest *promise* of reliable power?" Planning is *large-scale*
 for a different reason than operations: the combinatorics of *years ×
 seasons × scenarios × candidate assets*. A study might be 20 years × 8760
-hours × 100 wind scenarios × 10⁴ candidate sites. The optimization structure
+hours × 100 wind scenarios × $10^4$ candidate sites. The optimization
+structure
 is LP/MILP/MINLP again — but the models are enormous, so the HPC angle here
 is usually: parallelize the scenario tree, use decomposition (Benders for
 invest-vs-operate), or speed up the inner OPFs (where GPUs re-enter).

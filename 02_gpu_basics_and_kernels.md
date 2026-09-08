@@ -27,17 +27,18 @@ all cores busy; it loses on serial, branchy, latency-bound code.
 
 **Plain.** A CPU is 8 expert engineers who each think deeply. A GPU is 100,000
 interns who each do one tiny thing, but a million tiny things happen per
-hour. Grid optimization is full of "a million tiny things": multiply 10⁷
-non-zeros, run 2,000 contingency cases, sweep 100,000 buses.
+hour. Grid optimization is full of "a million tiny things": multiply
+$10^7$ non-zeros, run 2,000 contingency cases, sweep 100,000 buses.
 
 **Amdahl's law** *(glossary)* sets the ceiling: if 20% of a solver is
 fundamentally serial (e.g., a sparse *factorization* on one device), then no
-matter how many GPUs you add, total speedup ≤ 1/0.2 = 5×. This single
+matter how many GPUs you add, total speedup $\le 1/0.2 = 5\times$. This
+single
 equation explains why the literature splits into (a) *accelerate the linear
 algebra* and (b) *parallelize the scenarios* — and why honest papers report
 *what fraction they parallelized*.
 
-**The memory wall.** GPU FLOPs outgrow memory bandwidth by ~10–100×. Most
+**The memory wall.** GPU FLOPs outgrow memory bandwidth by $\sim 10$–$100\times$. Most
 power-system kernels (SpMV, sweeps) are **memory-bandwidth-bound** *(glossary:
 roofline model)*: their speed is set by how fast bytes move from HBM
 (A100: ~1.5–2 TB/s) — *not* by arithmetic. That is why `cuda_kernels/02_spmv.cu`
@@ -120,9 +121,10 @@ Rules of thumb that save weeks:
 Four distinct parallelism flavors, in order of maturity in the literature:
 
 1. **Inside the linear algebra (SpMV/sweeps).** Every Newton/GS/IPM iteration
-   contains sparse matrix-vector products over 10⁵–10⁷ non-zeros. One thread
-   per row, coalesced reads → memory-bandwidth-bound, predictable speedups of
-   ~10–100× *for that piece*. This is what `02_spmv.cu` demonstrates.
+   contains sparse matrix-vector products over $10^5$–$10^7$ non-zeros. One
+   thread per row, coalesced reads → memory-bandwidth-bound, predictable
+   speedups of $\sim 10$–$100\times$ *for that piece*. This is what
+   `02_spmv.cu` demonstrates.
    **Catch:** the sparse *factorization* (LU) — where most Newton time goes —
    is irregular and fill-in-heavy; GPU sparse LU exists (cuSPARSE) but is
    finicky. Many papers honestly split the solver: factorize once on CPU (or
@@ -141,7 +143,7 @@ Four distinct parallelism flavors, in order of maturity in the literature:
    the big "market-clearing in seconds" claims live (03, Subtopic C).
 
 **When a GPU does NOT help** *(say this in an interview and you pass)*:
-problems below ~10³ buses (launch overhead dominates — see kernel 03),
+problems below $\sim 10^3$ buses (launch overhead dominates — see kernel 03),
 purely serial heuristics, or any pipeline where Amdahl's serial fraction is
 large. "GPU-accelerated" with a 1.3× speedup on IEEE 14-bus is a red flag,
 not a result.
@@ -188,8 +190,9 @@ first one is the most instructive:
 1. **The missing block reduction (data race), then the half-done tree.**
    The naive kernel ends with `out[blockIdx.x] = s;` — executed by *all 256
    threads of the block* to the *same address*. Last write wins; only
-   ~1/256 of the true sum survives (measured symptom: ratio **0.00389
-   ≈ 1/256** at every size). The first fix added a shared-memory tree —
+   $\sim 1/256$ of the true sum survives (measured symptom: ratio
+   **0.00389 $\approx 1/256$** at every size). The first fix added a
+   shared-memory tree —
    which we started at `stride = 16` (a 32-thread habit) instead of
    `blockDim.x/2 = 128`; with 256-thread blocks that silently sums only
    the first 32 threads (measured symptom: ratio exactly **1/8**). The
@@ -257,12 +260,10 @@ The program solves the same 5-bus system twice and compares:
   iteration's voltages, so there is no data dependency and one thread per
   bus is enough. (This is why early GPU power-flow papers used Jacobi.)
 
-The update rule, derived from the power equation **S = V·conj(I)** with
-I = Ybus·V:
+The update rule, derived from the power equation $S = V \overline{I}$ with
+$I = Y_{\text{bus}} V$:
 
-```
-V_new = (1/Y_ii) * ( conj(S)/conj(V_old) − Σ_{j≠i} Y_ij·V_j )
-```
+$$V_{\text{new}} = \frac{1}{Y_{ii}} \left( \frac{\overline{S}}{\overline{V_{\text{old}}}} - \sum_{j \ne i} Y_{ij} V_j \right)$$
 
 Note the details that matter: it is `conj(S)/conj(V_old)` — S divided by
 the **conjugate** of the old voltage. The PV bus (bus 3) gets its magnitude
@@ -285,32 +286,34 @@ Power balance residual (should be ~0): -1.0e-9
 
 Reading it:
 
-- **GPU Jacobi takes ~3× more sweeps** (150 vs 49) — expected: Jacobi uses
-  stale values; GS's in-place updates converge faster.
+- **GPU Jacobi takes $\sim 3\times$ more sweeps** (150 vs 49) — expected:
+  Jacobi uses stale values; GS's in-place updates converge faster.
 - **GPU time is dominated by per-iteration host sync** (4 small memcpys +
-  sync, ~0.17 ms each), *not* by the kernel (5 buses ≈ launch overhead).
+  sync, ~0.17 ms each), *not* by the kernel (5 buses $\approx$ launch
+  overhead).
   This is the honest picture of the "launch-overhead regime" — a 100k-bus
   system would look like 02 (bandwidth-bound, fast).
-- **The power-balance residual (−1e-9) is the real correctness test.**
-  Convergence (ΔV < tol) alone proved nothing, as our debugging showed.
+- **The power-balance residual ($-10^{-9}$) is the real correctness
+  test.** Convergence ($\Delta V < \mathrm{tol}$) alone proved nothing, as
+  our debugging showed.
 
 **The debugging saga (kept because it teaches more than any tutorial page):
 four bugs, all caught by self-verification:**
 
 | # | Bug | Symptom | Catch |
 |---|-----|---------|-------|
-| 1 | GS update written as `(S/V_old − B)/Y_ii` instead of `(conj(S)/conj(V_old) − B)/Y_ii` — solves the **conjugate** power equation | converges happily; P at PV bus ≠ spec | power-balance residual |
-| 2 | PV-bus Q estimate computed as `Vre·Iim + Vim·Ire` instead of `Im(V·conj(I)) = Vim·Ire − Vre·Iim` | small residual (1.8e-2), PV bus P off by ~0.02 | power-balance residual |
-| 3 | "Fixing" #1 the wrong way (to `S/V_old`) — the conjugate problem again, plus the PV bus no longer at spec | residual 0.63 | hand check of actual bus powers |
+| 1 | GS update written as $\left(S/V_{\text{old}} - B\right)/Y_{ii}$ instead of $\left(\overline{S}/\overline{V_{\text{old}}} - B\right)/Y_{ii}$ — solves the **conjugate** power equation | converges happily; $P$ at the PV bus $\ne$ spec | power-balance residual |
+| 2 | PV-bus $Q$ estimate computed as $V_{re} I_{im} + V_{im} I_{re}$ instead of $\operatorname{Im}(V \overline{I}) = V_{im} I_{re} - V_{re} I_{im}$ | small residual ($1.8 \times 10^{-2}$), PV bus $P$ off by $\sim 0.02$ | power-balance residual |
+| 3 | "Fixing" #1 the wrong way (to $S/V_{\text{old}}$) — the conjugate problem again, plus the PV bus no longer at spec | residual 0.63 | hand check of actual bus powers |
 | 4 | (in 01) reduction bugs — see 5.1 | ratios 1/256, 1/8 | PASS/FAIL + a debug program printing the ratio |
 
 Takeaways for your own GPU solver work: (i) **derive your fixed point and
 check which equation it satisfies** — conjugate conventions are the #1
 silent bug in power-flow code; (ii) verify with a **physics invariant**
-(Tellegen: Σ P_injections = P_losses) in addition to "solver converged" and
-"GPU == CPU"; (iii) when GPU ≠ CPU or residual ≠ 0, print a **ratio** and
-a **per-block/per-bus breakdown** — "1/256" and "1/8" pointed straight at
-the thread-count bugs in minutes.
+(Tellegen: $\sum P_{\text{injections}} = P_{\text{losses}}$) in addition
+to "solver converged" and "GPU == CPU"; (iii) when GPU $\ne$ CPU or
+residual $\ne$ 0, print a **ratio** and a **per-block/per-bus breakdown**
+— "1/256" and "1/8" pointed straight at the thread-count bugs in minutes.
 
 ### 5.4 Results summary (final, all three kernels, 2026-09-04)
 

@@ -68,6 +68,13 @@ node tools/check_glossary_tooltips.js            # sanity-check JSON + matcher
   inside "DC-OPF"/"SCOPF" and "bus" never inside "Ybus". Code blocks and form
   controls are never touched, and the glossary page itself disables tooltips
   via `no_tooltips: true` in its front matter.
+- Equations (and powers of ten) are written in the `.md` sources as
+  `$...$` / `$$...$$` LaTeX and rendered client-side by KaTeX (pinned CDN
+  load in `_includes/head.html`). The same renderer runs over the tooltip
+  bodies and over client-side-injected content; `pre`/`code` blocks and
+  form controls are ignored by it. Note for authors: kramdown eats
+  backslash-punctuation, so math here only uses commands where a letter
+  follows the backslash (no `\,`, no `\[`/`\(` delimiters).
 
 After editing the glossary (or its `MATCHES` curation in the build script),
 re-run the build so the site picks up the new terms.
