@@ -28,8 +28,9 @@ specifies P and Q (|V| is unknown). *Plain:* the reference bus is the grid's
 "anchor"; a PV bus is a generator holding its voltage (plant with an AVR);
 a PQ bus is a load you can't control. Every grid has exactly one swing bus.
 
-**Ybus (bus admittance matrix)** — *Formal:* the N×N sparse matrix relating
-bus currents to bus voltages, I = Ybus·V, assembled from line admittances.
+**Ybus (bus admittance matrix)** — *Formal:* the $N \times N$ sparse matrix
+relating bus currents to bus voltages, $I = Y_{bus} V$, assembled from line
+admittances.
 *Plain:* the grid's "connectivity + conductance" table; mostly zeros because
 each bus only touches a handful of neighbours. Everything in power-flow math
 is built from it.
@@ -44,16 +45,17 @@ each row starts), `col_idx[nnz]`, `val[nnz]`. *Plain:* the "grocery list"
 format for sparse matrices: for row i, read entries from position
 `row_ptr[i]` to `row_ptr[i+1]` — contiguous in memory, fast for the GPU.
 
-**complex power (S = P + jQ), power factor** — *Formal:* S = V·I*, P the
-real (work-doing) part, Q the reactive (field-sustaining) part; power factor
-= P/|S| = cos(angle between V and I). *Plain:* P is the water out of the
+**complex power (S = P + jQ), power factor** — *Formal:* $S = V I^*$, $P$
+the real (work-doing) part, $Q$ the reactive (field-sustaining) part; power
+factor = $P/|S| = \cos\varphi$, the cosine of the angle between $V$ and $I$.
+*Plain:* P is the water out of the
 nozzle; Q is the pressure in the hose. Grid voltage is set by Q balance;
 low power factor means you're paying for pressure, not water.
 
 **per-unit (pu)** — *Formal:* normalization of all quantities by system bases
-(S_base, V_base) so values are dimensionless and O(1). *Plain:* "voltage =
-1.0" means "nominal" whether it's 11 kV or 765 kV; makes all matrices
-friendly and all papers comparable.
+($S_{base}$, $V_{base}$) so values are dimensionless and $O(1)$. *Plain:*
+"voltage = 1.0" means "nominal" whether it's 11 kV or 765 kV; makes all
+matrices friendly and all papers comparable.
 
 **transmission line (π model)** — *Formal:* a line represented by series
 impedance $z = r + jx$ and (optional) shunt admittances at each end. *Plain:*
@@ -139,8 +141,8 @@ re-optimization) and the middle (scenario storms); planning lives at the top.
 
 ## B. Optimization
 
-**objective (function)** — *Formal:* the scalar f(x) to minimize (or
-maximize) over the decision variables x. *Plain:* "the score" — cost,
+**objective (function)** — *Formal:* the scalar $f(x)$ to minimize (or
+maximize) over the decision variables $x$. *Plain:* "the score" — cost,
 losses, risk, emissions; everything else in the model exists to keep the
 score from being cheated.
 
@@ -198,8 +200,9 @@ could beat the best known answer. The tree structure is where GPU parallelism
 is being attacked today.
 
 **ADMM (Alternating Direction Method of Multipliers)** — *Formal:* a
-splitting algorithm: minimize f(x)+g(z) s.t. Ax = z by alternating x-min,
-z-min, and a dual (multiplier) update; robust to non-convexity in practice.
+splitting algorithm: minimize $f(x) + g(z)$ s.t. $Ax = z$ by alternating
+$x$-min, $z$-min, and a dual (multiplier) update; robust to non-convexity in
+practice.
 *Plain:* "neighbors each solve their own easy part, then trade prices until
 they agree on the shared quantities." Converges slower than IPM but each
 step is small, parallel, and restart-friendly — ideal for distributed DERMS
@@ -271,7 +274,7 @@ step with a fixed-length window, committing only the first step (receding
 horizon). *Plain:* "plan 24 h ahead every 5 minutes, but only promise the
 next 5 minutes" — how uncertainty is tamed in real operation.
 
-**ramp limits / start-up cost** — *Formal:* constraints on |P_t − P_{t−1}|
+**ramp limits / start-up cost** — *Formal:* constraints on $|P_t - P_{t-1}|$
 and fixed costs + time to bring a unit online. *Plain:* a plant can't jump
 from 0 to full in a second (turbines spin up for an hour; batteries can
 almost instant — which is exactly why storage changes UC).
@@ -307,7 +310,8 @@ IEEE 2020: framework/standard for DER-CMS functionality and interfaces.
 digital system without a bespoke integration project.
 
 **feeder / voltage band** — *Formal:* a distribution circuit radiating from
-a substation; the allowed voltage range (typically 0.95–1.05 pu). *Plain:*
+a substation; the allowed voltage range (typically $0.95$–$1.05$ pu).
+*Plain:*
 a neighborhood's main power artery; if DERs push too much power in, voltages
 rise and trip — the #1 DERMS control problem.
 

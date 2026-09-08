@@ -73,21 +73,22 @@ This matters because every optimization below has both P and Q variables.
 
 ### 2.2 The per-unit (pu) system
 
-Formal: all quantities normalized by bases: S_base (e.g., 100 MVA) and
-V_base (nominal voltage at that bus), from which I_base, Z_base follow.
+Formal: all quantities normalized by bases: $S_{base}$ (e.g., 100 MVA) and
+$V_{base}$ (nominal voltage at that bus), from which $I_{base}$ and $Z_{base}$
+follow.
 
 Plain: the grid spans 0.4 kV to 765 kV. In per-unit, transformers become
-*identities* (V and S scale together), voltages sit near 1.0, and all matrices
-are well-conditioned. **Every paper you will read works in pu.** Rule of
-thumb: 1.0 pu = nominal; 0.95–1.05 pu = typical band. "|V| = 1.02" means 2%
-above nominal.
+*identities* ($V$ and $S$ scale together), voltages sit near $1.0$, and all
+matrices are well-conditioned. **Every paper you will read works in pu.**
+Rule of thumb: $1.0$ pu = nominal; $0.95$–$1.05$ pu = typical band.
+"$|V| = 1.02$" means 2% above nominal.
 
 ### 2.3 Transmission lines and the Ybus
 
-Formal: a line between buses i and j is a π-network: series impedance
-z = r + jx, optional shunt admittances. With line admittance y = 1/z = g + jb,
-the **bus admittance matrix** Ybus adds y to the diagonal (Y_ii) and −y to the
-off-diagonals (Y_ij = Y_ji).
+Formal: a line between buses $i$ and $j$ is a π-network: series impedance
+$z = r + jx$, optional shunt admittances. With line admittance
+$y = 1/z = g + jb$, the **bus admittance matrix** Ybus adds $y$ to the
+diagonal ($Y_{ii}$) and $-y$ to the off-diagonals ($Y_{ij} = Y_{ji}$).
 
 Plain: each bus "talks" only to the buses it is physically connected to —
 typically 2–10 neighbours out of thousands. So Ybus is a **sparse** matrix:
@@ -166,12 +167,11 @@ for why each of those small solves is a SpMV story).
 ## 5. Optimal power flow: where optimization meets physics
 
 Formal: **OPF** *(glossary)*:
-minimize  f(x)  (e.g., generation cost or losses)
-subject to  S_i(V) = injection setpoints,
-            line flow limits,  voltage limits,  generator limits,
-            x = (P, Q setpoints, transformer taps, …)
+minimize $f(x)$ (e.g., generation cost or losses)
+subject to $S_i(V)$ = injection setpoints, line flow limits, voltage limits,
+generator limits, with $x$ = ($P$, $Q$ setpoints, transformer taps, …).
 
-**AC-OPF is non-convex** (the S = VI* equations are bilinear in the variables).
+**AC-OPF is non-convex** (the $S = VI^*$ equations are bilinear in the variables).
 That is *the* central fact of the whole subfield:
 
 - **DC-OPF** *(glossary)*: linearize the physics → an **LP** *(glossary)*.
