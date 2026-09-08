@@ -51,7 +51,7 @@
   },
   {
     "term": "complex power (S = P + jQ), power factor",
-    "formal": "$S = V I^*$, $P$ the real (work-doing) part, $Q$ the reactive (field-sustaining) part; power factor = $P/|S| = \\cos\\varphi$, the cosine of the angle between $V$ and $I$.",
+    "formal": "$S = V \\overline{I}$, $P$ the real (work-doing) part, $Q$ the reactive (field-sustaining) part; power factor = $P/|S| = \\cos\\varphi$, the cosine of the angle between $V$ and $I$.",
     "plain": "P is the water out of the nozzle; Q is the pressure in the hose. Grid voltage is set by Q balance; low power factor means you're paying for pressure, not water.",
     "matches": [
       "complex power (S = P + jQ), power factor",

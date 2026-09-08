@@ -45,7 +45,7 @@ each row starts), `col_idx[nnz]`, `val[nnz]`. *Plain:* the "grocery list"
 format for sparse matrices: for row i, read entries from position
 `row_ptr[i]` to `row_ptr[i+1]` — contiguous in memory, fast for the GPU.
 
-**complex power (S = P + jQ), power factor** — *Formal:* $S = V I^*$, $P$
+**complex power (S = P + jQ), power factor** — *Formal:* $S = V \overline{I}$, $P$
 the real (work-doing) part, $Q$ the reactive (field-sustaining) part; power
 factor = $P/|S| = \cos\varphi$, the cosine of the angle between $V$ and $I$.
 *Plain:* P is the water out of the

@@ -171,7 +171,7 @@ minimize $f(x)$ (e.g., generation cost or losses)
 subject to $S_i(V)$ = injection setpoints, line flow limits, voltage limits,
 generator limits, with $x$ = ($P$, $Q$ setpoints, transformer taps, …).
 
-**AC-OPF is non-convex** (the $S = VI^*$ equations are bilinear in the variables).
+**AC-OPF is non-convex** (the $S = V \overline{I}$ equations are bilinear in the variables).
 That is *the* central fact of the whole subfield:
 
 - **DC-OPF** *(glossary)*: linearize the physics → an **LP** *(glossary)*.
