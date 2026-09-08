@@ -58,6 +58,11 @@ node tools/check_glossary_tooltips.js            # sanity-check JSON + matcher
   `assets/js/glossary_tooltips.js` wraps term occurrences in `#main` with a
   `.gt-term` span and shows a shared `.gt-tip` tooltip (styled in
   `assets/css/site.css`).
+- Each wrapped term shows a small superscript ¹. The old literal
+  `*(glossary)*` / `*(glossary: ...)*` source markers are stripped from the
+  rendered page (including the per-section summary lines that consisted of
+  nothing but a marker) — they stay in the `.md` files as authoring notes,
+  and the quiz page's client-side-injected content is cleaned the same way.
 - Matching is boundary-guarded and longest-match-wins, so "OPF" never fires
   inside "DC-OPF"/"SCOPF" and "bus" never inside "Ybus". Code blocks and form
   controls are never touched, and the glossary page itself disables tooltips

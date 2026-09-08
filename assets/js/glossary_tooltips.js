@@ -7,9 +7,12 @@
    glossary; `--report` previews every match first).
 
    What it does:
+     - strips the authoring markers *(glossary)* / *(glossary: ...)*
+       from the rendered page — the inline tooltips replace them;
      - walks the text nodes of #main and wraps each glossary-term
-       occurrence in <span class="gt-term" tabindex="0" data-gt="i">
-       (code, pre and form controls are never touched);
+       occurrence in <span class="gt-term" tabindex="0" data-gt="i">,
+       carrying a small superscript ¹ (code, pre and form controls
+       are never touched);
      - shows the term's glossary definition (Formal + Plain) in one
        shared tooltip on hover or keyboard focus;
      - the tooltip is pure reference — it does not link anywhere.
@@ -88,11 +91,41 @@
     return chosen;
   }
 
+  /* The source marks terms with *(glossary)* or *(glossary: detail)*.
+     The inline tooltips supersede those annotations, so strip them from
+     the rendered page (a paragraph that held only the marker — the
+     per-section "glossary: ..." summaries — goes away with it). */
+  function isGlossaryMarker(text) {
+    return /^\(glossary(\s*:[\s\S]*)?\)$/.test((text || '').trim());
+  }
+
+  function stripGlossaryMarkers(root) {
+    var els = root.querySelectorAll('em, i');
+    var n, el, parent, prev, dropped = 0;
+    for (n = 0; n < els.length; n++) {
+      el = els[n];
+      if (!isGlossaryMarker(el.textContent)) continue;
+      parent = el.parentNode;
+      prev = el.previousSibling;
+      if (prev && prev.nodeType === 3 && !prev.nodeValue.trim()) {
+        parent.removeChild(prev);
+      }
+      parent.removeChild(el);
+      dropped++;
+      if (parent.nodeName === 'P' && !parent.textContent.trim()) {
+        parent.parentNode.removeChild(parent);
+      }
+    }
+    return dropped;
+  }
+
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
       escapeRe: escapeRe,
       buildMatchers: buildMatchers,
-      matchesIn: matchesIn
+      matchesIn: matchesIn,
+      isGlossaryMarker: isGlossaryMarker,
+      stripGlossaryMarkers: stripGlossaryMarkers
     };
   }
   if (!data || typeof document === 'undefined') return;
@@ -288,6 +321,7 @@
   function init() {
     var root = document.getElementById('main');
     if (!root) return;
+    stripGlossaryMarkers(root);
     scan(root);
     if (typeof MutationObserver === 'function') {
       var mo = new MutationObserver(function (muts) {
@@ -295,7 +329,10 @@
           var added = muts[i].addedNodes;
           for (var j = 0; j < added.length; j++) {
             var a = added[j];
-            if (a.nodeType === 1 && !SKIP_TAGS[a.nodeName]) scan(a);
+            if (a.nodeType === 1 && !SKIP_TAGS[a.nodeName]) {
+              stripGlossaryMarkers(a);
+              scan(a);
+            }
           }
         }
       });

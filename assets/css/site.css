@@ -1256,14 +1256,25 @@ blockquote {
 
 /* ==========================================================================
    Glossary tooltips — terms wrapped by assets/js/glossary_tooltips.js
-   get a quiet dotted underline; the shared .gt-tip carries the
-   Formal / Plain definitions from _data/glossary.json.
+   get a quiet dotted underline plus a small superscript ¹ (that ¹ is what
+   replaces the old literal "*(glossary)*" source markers); the shared
+   .gt-tip carries the Formal / Plain definitions from _data/glossary.json.
    ========================================================================== */
 .gt-term {
   border-bottom: 1px dotted var(--amber-deep);
   cursor: help;
   border-radius: 2px;
   transition: background-color .12s ease, border-color .12s ease;
+}
+/* Quiet superscript marker: "this word has a definition". */
+.gt-term::after {
+  content: "\207A"; /* ¹ */
+  font-size: 0.68em;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: 0.45em;
+  margin-left: 1px;
+  color: var(--amber-deep);
 }
 .gt-term:hover,
 .gt-term:focus-visible {

@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const { buildMatchers, matchesIn } = require(path.join(ROOT, 'assets', 'js', 'glossary_tooltips.js'));
+const { buildMatchers, matchesIn, isGlossaryMarker } = require(path.join(ROOT, 'assets', 'js', 'glossary_tooltips.js'));
 
 let failures = 0;
 
@@ -104,6 +104,22 @@ ok(spans('the bus, the bus, and the bus.').length === 3,
    'repeats all match');
 ok(spans('OPF; OPF. (OPF) \u2014 OPF:').length === 4,
    'punctuation boundaries all match');
+
+/* ------------------------------------------------------------------ */
+console.log('source markers:');
+
+ok(isGlossaryMarker('(glossary)'), 'bare "(glossary)" recognized');
+ok(isGlossaryMarker('  (glossary)  '), 'surrounding whitespace ignored');
+ok(isGlossaryMarker('(glossary: Alternating Direction Method of Multipliers)'),
+   'marker with detail recognized');
+ok(isGlossaryMarker('(glossary:\n  roofline model)'), 'line-wrapped marker recognized');
+ok(isGlossaryMarker('(glossary: LP, QP, NLP, MILP, MINLP, LMP)'), 'term-list marker recognized');
+ok(!isGlossaryMarker('glossary'), 'bare word is not a marker');
+ok(!isGlossaryMarker('(see glossary)'), 'ordinary parenthetical is not a marker');
+ok(!isGlossaryMarker('(Glossary)'), 'uppercase G is not a marker');
+ok(!isGlossaryMarker('*(glossary)*'), 'markdown asterisks are not a rendered marker');
+ok(!isGlossaryMarker('(glossary: unterminated'), 'unterminated detail is not a marker');
+ok(!isGlossaryMarker(''), 'empty text is not a marker');
 
 /* ------------------------------------------------------------------ */
 console.log(failures === 0
