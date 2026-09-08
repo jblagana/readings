@@ -15,6 +15,6 @@
   <link type="application/atom+xml" rel="alternate" href="{{ '/feed.xml' | relative_url }}" title="{{ site.title }}">
   {% unless page.no_tooltips %}
   <script>window.READINGS_GLOSSARY = {{ site.data.glossary | jsonify | replace: '</', '<\/' }};</script>
-  <script src="{{ '/assets/js/glossary_tooltips.js?v=3' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/glossary_tooltips.js?v=5' | relative_url }}" defer></script>
   {% endunless %}
 </head>

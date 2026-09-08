@@ -14,7 +14,10 @@
        data-gt="i">, carrying a small superscript ¹ (code, pre and form
        controls are never touched). The root is resolved defensively —
        #main, #main-content, <main class="page-content">, any <main>,
-       then <body> — because the minima theme ships an id-less <main>;
+       then <body> — because the minima theme ships an id-less <main>.
+        Text nodes are snapshotted before wrapping: replacing the node a
+        TreeWalker just returned detaches the walker and would stop the
+        scan after the very first match on the page;
      - shows the term's glossary definition (Formal + Plain) in one
        shared tooltip on hover or keyboard focus;
      - the tooltip is pure reference — it does not link anywhere.
@@ -64,8 +67,10 @@
     return out;
   }
 
-  /* All non-overlapping matches in `text`: longer span wins on overlap,
-     then the earlier one; result sorted by position. */
+  /* All non-overlapping matches in `text`: at equal start the longer
+     span wins; the greedy left-to-right pass only rejects spans that
+     truly overlap a kept one, so a shorter match before/after a longer
+     one is preserved; result sorted by position. */
   function matchesIn(text, matchers) {
     var hits = [], i, m, r;
     for (i = 0; i < matchers.length; i++) {
@@ -78,9 +83,8 @@
     }
     if (!hits.length) return [];
     hits.sort(function (a, b) {
-      var la = a.end - a.start, lb = b.end - b.start;
-      if (lb !== la) return lb - la;
-      return a.start - b.start;
+      if (a.start !== b.start) return a.start - b.start;
+      return (b.end - b.start) - (a.end - a.start);
     });
     var chosen = [], lastEnd = -1;
     for (i = 0; i < hits.length; i++) {
@@ -89,7 +93,6 @@
         lastEnd = hits[i].end;
       }
     }
-    chosen.sort(function (a, b) { return a.start - b.start; });
     return chosen;
   }
 
@@ -131,10 +134,17 @@
       pickRoot: pickRoot
     };
   }
-  if (!data || typeof document === 'undefined') return;
+  if (typeof document === 'undefined') return;
+  if (!data) {
+    console.warn('[glossary_tooltips] window.READINGS_GLOSSARY is missing — no tooltips (markers left in place)');
+    return;
+  }
 
   var matchers = buildMatchers(data);
-  if (!matchers.length) return;
+  if (!matchers.length) {
+    console.warn('[glossary_tooltips] glossary data has no usable match patterns — no tooltips');
+    return;
+  }
 
   /* ------------------------------------------------------------------ *
    * DOM walk — wrap matched text.
@@ -185,10 +195,19 @@
   }
 
   function scan(root) {
+    /* Snapshot the text nodes BEFORE wrapping. wrapNode() replaces the
+       very node the TreeWalker just returned; that detaches the
+       walker's current node, and every following nextNode() then
+       returns null — the scan would stop after the FIRST match on the
+       page (the "markers stripped, but no term ever gets its ¹ /
+       tooltip" bug). Iterating a plain list is immune to that. */
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
-    var node, total = 0;
-    while ((node = walker.nextNode())) {
-      if (node.nodeValue && node.nodeValue.trim() && !insideSkipped(node.parentNode)) {
+    var nodes = [], node, total = 0;
+    while ((node = walker.nextNode())) nodes.push(node);
+    for (var i = 0; i < nodes.length; i++) {
+      node = nodes[i];
+      if (node.parentNode && node.nodeValue && node.nodeValue.trim() &&
+          !insideSkipped(node.parentNode)) {
         total += wrapNode(node);
       }
     }
@@ -345,9 +364,19 @@
 
   function init() {
     var root = contentRoot();
-    if (!root) return;
+    if (!root) {
+      console.warn('[glossary_tooltips] no content root found — nothing to wrap');
+      return;
+    }
     stripGlossaryMarkers(root);
-    scan(root);
+    var total = scan(root);
+    var label = root.tagName ? root.tagName.toLowerCase() : 'root';
+    if (root.id) label += '#' + root.id;
+    else if (typeof root.className === 'string' && root.className.trim()) {
+      label += '.' + root.className.trim().split(/\s+/)[0];
+    }
+    console.info('[glossary_tooltips] wrapped ' + total +
+      ' glossary term occurrence(s) under <' + label + '>');
     if (typeof MutationObserver === 'function') {
       var mo = new MutationObserver(function (muts) {
         for (var i = 0; i < muts.length; i++) {

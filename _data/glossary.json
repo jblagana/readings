@@ -110,6 +110,17 @@
     ]
   },
   {
+    "term": "Gauss–Seidel / Jacobi",
+    "formal": "iterative power-flow solvers that update bus voltages one row at a time without forming or factoring a Jacobian; Gauss–Seidel uses the freshest values within a sweep, Jacobi uses only the previous sweep's values.",
+    "plain": "instead of solving all the equations at once (Newton–Raphson), each bus repeatedly \"averages its neighbours\" until the voltages settle. Slower to converge, but one sweep is embarrassingly parallel — exactly the shape the first GPU power-flow kernels exploited.",
+    "matches": [
+      "Gauss–Seidel / Jacobi",
+      "Gauss–Seidel",
+      "Jacobi",
+      "GS"
+    ]
+  },
+  {
     "term": "DC power flow",
     "formal": "linearization of AC power flow: |V| ≡ 1, small angles, Q and losses dropped; injections become the linear system B·θ = P.",
     "plain": "",
@@ -137,7 +148,16 @@
     "plain": "the grid has more meters than unknowns; this fuses the noisy readings into the best-guess \"what is actually happening right now\" picture.",
     "matches": [
       "state estimation (WLS)",
-      "state estimation",
+      "state estimation"
+    ]
+  },
+  {
+    "term": "weighted least squares (WLS)",
+    "formal": "least-squares estimation in which each residual is weighted by its precision (inverse variance); linear closed form x̂ = (HᵀWH)⁻¹HᵀWz.",
+    "plain": "fit a line through noisy points, but let the trustworthy (low-noise) readings count more — the standard way to fuse many redundant meter measurements into one estimate.",
+    "matches": [
+      "weighted least squares (WLS)",
+      "weighted least squares",
       "WLS"
     ]
   },
@@ -219,11 +239,22 @@
     ]
   },
   {
+    "term": "NLP / MNLP",
+    "formal": "NLP — nonlinear programming: a (smooth, often non-convex) objective subject to nonlinear equality/inequality constraints; AC-OPF lives in this class. MNLP — mixed-integer nonlinear programming: an NLP with some variables binary/integer (e.g. unit on/off states inside an AC network model).",
+    "plain": "\"LP with curves\" — the real-world class; much harder than LP, and its solvers (interior point + branch-and-bound hybrids) are exactly where GPU acceleration pays off.",
+    "matches": [
+      "NLP / MNLP",
+      "NLP",
+      "MNLP"
+    ]
+  },
+  {
     "term": "MILP / MINLP",
     "formal": "optimization with some variables restricted to integer (binary) values (MILP: rest linear; MINLP: rest nonlinear).",
     "plain": "\"decide WHICH plants run\" (0/1 choices) plus \"how much\". The discretization is what makes these problems hard (NP-hard) and what branch-and-bound attacks.",
     "matches": [
       "MILP / MINLP",
+      "MILP",
       "MILPs",
       "MINLP"
     ]
@@ -341,6 +372,14 @@
       "SCOPF (security-constrained OPF)",
       "SCOPF",
       "security-constrained OPF"
+    ]
+  },
+  {
+    "term": "security analysis",
+    "formal": "the post-contingency check that after each N-1 (in practice also N-2) outage every operational constraint — line loading, bus voltages, frequency — remains within limits.",
+    "plain": "crash-test the grid: remove one line or one generator at a time and verify nothing overloads; the core check behind N-1 operation and SCOPF.",
+    "matches": [
+      "security analysis"
     ]
   },
   {
@@ -561,6 +600,7 @@
     "plain": "32 interns must do the same step at the same time — if one branch says \"if\" and another \"else\", both paths run and the losers wait. Branch divergence = wasted interns.",
     "matches": [
       "warp / SIMT",
+      "warp",
       "warps",
       "SIMT"
     ]

@@ -75,6 +75,15 @@ each error. Its sparse block structure is what solvers exploit.
 zeros into non-zeros in the intermediate math — the hidden cost that makes
 big power-flow solves expensive and hard to parallelize.
 
+**Gauss–Seidel / Jacobi** — *Formal:* iterative power-flow solvers that
+update bus voltages one row at a time without forming or factoring a
+Jacobian; Gauss–Seidel uses the freshest values within a sweep, Jacobi
+uses only the previous sweep's values. *Plain:* instead of solving all the
+equations at once (Newton–Raphson), each bus repeatedly "averages its
+neighbours" until the voltages settle. Slower to converge, but one sweep is
+embarrassingly parallel — exactly the shape the first GPU power-flow
+kernels exploited.
+
 **DC power flow** — *Formal:* linearization of AC power flow: |V| ≡ 1, small
 angles, Q and losses dropped; injections become the linear system B·θ = P.
 
@@ -89,6 +98,12 @@ the weighted sum of squared measurement residuals,
 x̂ = argmin (z − h(x))ᵀW(z − h(x)). *Plain:* the grid has more meters than
 unknowns; this fuses the noisy readings into the best-guess "what is
 actually happening right now" picture.
+
+**weighted least squares (WLS)** — *Formal:* least-squares estimation in
+which each residual is weighted by its precision (inverse variance);
+linear closed form x̂ = (HᵀWH)⁻¹HᵀWz. *Plain:* fit a line through noisy
+points, but let the trustworthy (low-noise) readings count more — the
+standard way to fuse many redundant meter measurements into one estimate.
 
 **DistFlow** — *Formal:* branch-flow formulation of the (radial) distribution
 power flow in squared-voltage variables; convex under mild conditions.
@@ -133,6 +148,14 @@ admissible solutions must satisfy. *Plain:* the rules of the game; physics
 *Plain:* linear cost, linear rules; always solvable to *global* optimality
 in polynomial time — the "well-behaved" class.
 
+
+**NLP / MNLP** — *Formal:* NLP — nonlinear programming: a (smooth, often
+non-convex) objective subject to nonlinear equality/inequality constraints;
+AC-OPF lives in this class. MNLP — mixed-integer nonlinear programming: an
+NLP with some variables binary/integer (e.g. unit on/off states inside an
+AC network model). *Plain:* "LP with curves" — the real-world class; much
+harder than LP, and its solvers (interior point + branch-and-bound hybrids)
+are exactly where GPU acceleration pays off.
 
 **MILP / MINLP** — *Formal:* optimization with some variables restricted to
 integer (binary) values (MILP: rest linear; MINLP: rest nonlinear).
@@ -218,6 +241,12 @@ outage within limits. *Plain:* OPF with "and it must still work if any one
 wire breaks". Multiplies constraint count by ~100–1000 — the main driver of
 "large-scale" in the operations literature, and a favorite GPU batching
 target.
+
+**security analysis** — *Formal:* the post-contingency check that after
+each N-1 (in practice also N-2) outage every operational constraint — line
+loading, bus voltages, frequency — remains within limits. *Plain:*
+crash-test the grid: remove one line or one generator at a time and
+verify nothing overloads; the core check behind N-1 operation and SCOPF.
 
 **unit commitment (UC)** — *Formal:* multi-period MILP deciding generator
 on/off states and levels, with start-up costs, ramp and min up/down
