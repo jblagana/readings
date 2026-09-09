@@ -43,6 +43,23 @@ equation explains why the literature splits into (a) *accelerate the linear
 algebra* and (b) *parallelize the scenarios* — and why honest papers report
 *what fraction they parallelized*.
 
+<div class="widget am" id="am-root">
+  <span class="widget-badge">Interactive</span>
+  <p class="widget-title">Amdahl's law, made moveable</p>
+  <p class="widget-sub">Drag the serial fraction $f$ — the speedup ceiling is $1/f$, no matter how many GPUs you buy.</p>
+  <div class="am-bar" aria-hidden="true"><div class="am-serial"></div></div>
+  <div class="am-bar-legend">
+    <span class="am-key-serial">serial: <span class="am-serial-pct">20%</span></span>
+    <span>parallel — any number of GPUs</span>
+  </div>
+  <div class="am-read">
+    <span class="am-value">5.0×</span>
+    <p class="am-text">The ceiling is 5.0× — the literature's honest middle. Factorize on CPU, sweep on GPU; parallelize the scenarios for the rest.</p>
+  </div>
+  <label class="am-label" for="am-slider">Serial fraction $f$</label>
+  <input class="am-slider" id="am-slider" type="range" min="1" max="95" step="1" value="20" aria-label="Serial fraction, percent">
+</div>
+
 **The memory wall.** GPU FLOPs outgrow memory bandwidth by $\sim 10$–$100\times$. Most
 power-system kernels (SpMV, sweeps) are **memory-bandwidth-bound** *(glossary:
 roofline model)*: their speed is set by how fast bytes move from HBM
@@ -105,24 +122,10 @@ double precision, CUDA, nvcc)*
 
 ## 3. The software stack (what you will actually touch)
 
-```
-            ┌────────────────────────────────────────────┐
-  problem   │  power system models (MATPOWER, PyPSA,     │
-  layer     │  PowerModels.jl, GridCal, PGLib-OPF data)  │
-            ├────────────────────────────────────────────┤
-  modeling  │  PuLP/Pyomo (Python), PowerModels (Julia), │
-  layer     │  CasADi, AMPL — turn physics into LP/NLP/  │
-            │  MILP objects                               │
-            ├────────────────────────────────────────────┤
-  solver    │  HiGHS, Gurobi, CPLEX, IPOPT, MOSEK        │
-            │  (CPU; increasingly with GPU backends)     │
-            ├────────────────────────────────────────────┤
-  HPC/GPU   │  CUDA C/C++ (raw kernels), cuBLAS/cuSPARSE/│
-  layer     │  cuSOLVER (tuned linear algebra),          │
-            │  PyTorch/JAX/CuPy (Python → CUDA),          │
-            │  NVIDIA cuOpt (GPU solver, MILP/LP)         │
-            └────────────────────────────────────────────┘
-```
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_software_stack.svg' | relative_url }}" alt="Four stacked software layers: problem (MATPOWER, PyPSA, PowerModels.jl, GridCal, PGLib-OPF data), modeling (PuLP/Pyomo, PowerModels, CasADi, AMPL), solver (HiGHS, Gurobi, CPLEX, IPOPT, MOSEK), and a navy HPC/GPU layer (CUDA, cuBLAS/cuSPARSE/cuSOLVER, PyTorch/JAX/CuPy, NVIDIA cuOpt) marked as where this package builds" width="760">
+  <figcaption>The stack from problem data to raw kernels. Kernels 01–03 sit at the bottom; everything above them is "someone else's problem" for our purposes.</figcaption>
+</figure>
 
 Rules of thumb that save weeks:
 

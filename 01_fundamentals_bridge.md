@@ -44,6 +44,11 @@ Three nested problems (this package keeps them straight):
 | **Security** | Does it still work if one line/generator fails? | seconds–hours | N-1 constraints (Sec. 6) |
 | **Planning** | What should we *build* over the next 5–30 years? | years | Investment models (Sec. 8) |
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_nested_problems.svg' | relative_url }}" alt="Nested boxes: planning (years) contains security (N-1, minutes to hours), which contains dispatch (power flow and OPF, seconds to hours); a time-scale arrow runs from years down to seconds" width="760">
+  <figcaption>Dispatch sits inside security, security inside planning — each layer calls the one below as a subroutine, so a kernel that accelerates dispatch pays off at all three timescales.</figcaption>
+</figure>
+
 **Why "large-scale"?** A national transmission network has $10^4$–$10^5$
 buses and $10^5$–$10^6$ branch constraints; a realistic SCOPF multiplies
 that by hundreds to thousands of contingency scenarios; a planning study
@@ -96,6 +101,11 @@ mostly zeros. *Sparsity is the seed of everything GPU-related in this field*:
 sparse matrices can be stored compactly (CSR format) and multiplied by vectors
 in fully parallel, memory-bandwidth-bound kernels (see
 `02_gpu_basics_and_kernels.md` and `cuda_kernels/02_spmv.cu`).
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_ybus_sparsity.svg' | relative_url }}" alt="A five-bus network with six lines beside its 5-by-5 sparse admittance matrix: navy diagonal, amber off-diagonals where lines connect, faint dots for zeros" width="760">
+  <figcaption>The 5-bus example above: 6 lines give 17 non-zeros in a 25-slot matrix. Dense diagonal, off-diagonals only where lines exist — exactly what CSR exploits, and why SpMV is embarrassingly parallel.</figcaption>
+</figure>
 
 
 ---
@@ -182,6 +192,11 @@ That is *the* central fact of the whole subfield:
   shift heuristics, and simply running a general-purpose NLP solver and
   hoping (which is what most industrial practice does).
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_opf_landscape.svg' | relative_url }}" alt="Left: a single smooth convex bowl with one globally optimal minimum (DC-OPF). Right: a wavy non-convex landscape with local minima and a marked global minimum (AC-OPF)" width="760">
+  <figcaption>DC-OPF carves the landscape into one bowl — fast and globally optimal, but linearized physics. AC-OPF keeps the physics and pays with local minima. Solver choice in every paper you read hangs off this trade-off.</figcaption>
+</figure>
+
 Solver families you will see in every paper *(glossary: all of these)*:
 
 | Family | Solves | Example tools | Notes |
@@ -257,6 +272,11 @@ transmission operator and *above* individual inverters. The timescale ladder
 | **Daily** (24 h ahead) | storage charging plan, DR programs | MILP / stochastic programming |
 | **Intraday** (1–60 min) | re-dispatch, re-planning | OPF / MPC |
 | **Real-time** (sub-second–1 s) | inverter setpoints, voltage support | fast OPF, droop control, ADMM |
+
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_derms_timescales.svg' | relative_url }}" alt="Four descending steps: strategic planning over years, daily 24-hour-ahead planning, intraday 1–60 minute re-dispatch, and a navy real-time step at sub-second–1 second cadence marked as the GPU-batching target; a slow-to-fast arrow runs underneath" width="760">
+  <figcaption>The ladder in picture form: the real-time rung — sub-second to 1 s — is where a DERMS must re-optimize faster than a CPU pipeline can, and where GPU batching (03, Subtopic D) is the converging answer.</figcaption>
+</figure>
 
 **Why compute matters here.** A large DERMS coordinates $10^3$–$10^6$
 devices at

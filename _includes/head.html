@@ -6,7 +6,7 @@
   {% seo %}
 
   <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/site.css?v=4' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css?v=5' | relative_url }}">
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg?v=2' | relative_url }}">
   <meta name="theme-color" content="#0d1526">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,15 @@
   <script>window.READINGS_GLOSSARY = {{ site.data.glossary | jsonify | replace: '</', '<\/' }};</script>
   <script src="{{ '/assets/js/glossary_tooltips.js?v=7' | relative_url }}" defer></script>
   {% endunless %}
+
+  <!-- Interactive widgets. Each file guards on its own root element and
+       no-ops on pages that don't contain the widget: Amdahl slider (02 §1),
+       regime finder + clickable gap map (03, Synthesis), speedup-claim
+       grader (05 §5). -->
+  <script src="{{ '/assets/js/amdahl.js?v=1' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/regime_finder.js?v=1' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/gap_map.js?v=1' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/claim_grader.js?v=1' | relative_url }}" defer></script>
 
   <!-- KaTeX (pinned CDN build): renders the $...$ / $$...$$ equations and
        powers of ten used in the .md sources. renderReadingsMath() is the

@@ -61,6 +61,11 @@ span 2012–2024. The field has been through its full arc:
    refinements (A13–A16, 2021–2024) — sparse modified Newton (A13),
    CPU+GPU implementation analysis (A14), polar-form PF (A15, A16).
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_field_timeline.svg' | relative_url }}" alt="A 2012–2024 timeline in three phases — existence, preconditioners, consolidation — with 16 paper dots, A06/A09/A11/A12 highlighted, and a callout from A09 describing batched LU as the ancestor of scenario and contingency concurrency" width="760">
+  <figcaption>The 16 Subtopic-A papers on one axis. Highlighted: A06 (the first real GPU power flow, 2016), A09 (batched LU — the concurrency ancestor), A11 (fully parallel Newton), A12 (the 2020 map of the subtopic).</figcaption>
+</figure>
+
 **What is established (safe to state in a thesis):**
 - GPU power-flow speedups are real and repeatable for the *inner linear
   solve*; the honest numbers come from bandwidth, not FLOPs (your kernel
@@ -261,6 +266,33 @@ are mature (E01–E03); their GPU acceleration is not yet published.*
 | **Bandwidth-bound** | ~10k–1M+ rows, SpMV-shaped inner solves | ~1.3–1.5 TB/s effective vs ~20 GB/s CPU single-core; 30–190× | kernels `01`, `02` |
 | **Memory-capacity** | thousands of independent instances (N-1, scenarios, feeders) that fit in 40–80 GB HBM | One card holds the whole batch; CPU would stream it | A09, B07, D-batch argument |
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_regimes.svg' | relative_url }}" alt="Three panels: per-iteration bars where the GPU is slower than the CPU on a 5-bus system; a time-versus-rows chart where the GPU flattens at the HBM ceiling while the CPU climbs, a 30–190× gap; and a 40 GB card holding a grid of thousands of small instances" width="760">
+  <figcaption>The same table, drawn: launch-overhead (the GPU loses), bandwidth-bound (the inner solve wins 30–190×), memory-capacity (the batch is the speedup). A real DERMS solver runs all three at once.</figcaption>
+</figure>
+
+<div class="widget rf" id="rf-root">
+  <span class="widget-badge">Interactive</span>
+  <p class="widget-title">Regime finder</p>
+  <p class="widget-sub">Where does <em>your</em> workload land? Two numbers decide — the thresholds are the table above.</p>
+  <div class="rf-inputs">
+    <label class="rf-field">
+      <span class="rf-name">Buses per problem</span>
+      <input class="rf-input" id="rf-buses" type="number" min="1" inputmode="numeric" placeholder="e.g. 12000" aria-label="Buses per problem">
+    </label>
+    <label class="rf-field">
+      <span class="rf-name">Independent cases (N-1 / scenarios / feeders)</span>
+      <input class="rf-input" id="rf-cases" type="number" min="1" inputmode="numeric" placeholder="e.g. 2000" aria-label="Independent cases">
+    </label>
+  </div>
+  <div class="rf-chips">
+    <span class="rf-chip" data-regime="launch">1 · Launch-overhead</span>
+    <span class="rf-chip" data-regime="bandwidth">2 · Bandwidth-bound</span>
+    <span class="rf-chip" data-regime="capacity">3 · Memory-capacity</span>
+  </div>
+  <p class="rf-verdict">Enter at least one number — the first threshold that fits (cases ≥ 500 → capacity; buses ≥ 1k → bandwidth; below ~1k buses → launch) decides your regime.</p>
+</div>
+
 **The gap map (what to attack, in order of first-mover value):**
 
 1. **GPU + DERMS (Subtopic D).** The problem is defined (D01, D07), the
@@ -279,6 +311,38 @@ are mature (E01–E03); their GPU acceleration is not yet published.*
    results saturating ~40 GB define the exact question: when does SCOPF
    with N-1 at 10k+ buses need *two* cards, and how (NCCL + what
    partition)? No paper answers this as of the metadata we collected.
+
+<div class="widget gm" id="gm-root">
+  <span class="widget-badge">Interactive</span>
+  <p class="widget-title">The gap map, clickable</p>
+  <p class="widget-sub">The four gaps above, ranked by first-mover value. Pick one to see why it ranks there.</p>
+  <div class="gm-grid">
+    <button type="button" class="gm-card" data-gap="1" aria-pressed="true">
+      <span class="gm-rank">1</span>
+      <span class="gm-card-title">GPU + DERMS</span>
+      <span class="gm-card-sub">Subtopic D · low–medium risk</span>
+    </button>
+    <button type="button" class="gm-card" data-gap="2" aria-pressed="false">
+      <span class="gm-rank">2</span>
+      <span class="gm-card-title">GPU + TEP / planning</span>
+      <span class="gm-card-sub">Subtopic E · higher risk</span>
+    </button>
+    <button type="button" class="gm-card" data-gap="3" aria-pressed="false">
+      <span class="gm-rank">3</span>
+      <span class="gm-card-title">GPU UC at scale</span>
+      <span class="gm-card-sub">Subtopic C · medium risk</span>
+    </button>
+    <button type="button" class="gm-card" data-gap="4" aria-pressed="false">
+      <span class="gm-rank">4</span>
+      <span class="gm-card-title">Multi-GPU SCOPF</span>
+      <span class="gm-card-sub">Subtopic B · low risk</span>
+    </button>
+  </div>
+  <div class="gm-detail">
+    <p class="gm-detail-why" id="gm-detail-why"></p>
+    <p class="gm-detail-meta" id="gm-detail-meta"></p>
+  </div>
+</div>
 
 **Cross-links.**
 - The kernels behind every regime claim: `cuda_kernels/` (+

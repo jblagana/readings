@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" role="img" aria-labelledby="t d">
+  <title id="t">Eight-semester Gantt chart</title>
+  <desc id="d">An eight-semester Gantt chart over four years. Mainline: D1 DERMS from S2 to S4 (navy), D2 TEP/planning from S4 to S6 (navy). Side tracks: D3 GPU UC and D4 multi-GPU SCOPF both from S5 to S7 (amber). A dashed hedge bar D5 ML-assisted spans S4 to S6. Amber diamonds mark the gates: kernel 10x at end of S1, paper 1 out at end of S2, beat D04/D05 at end of S3, TEP end-to-end at end of S5.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .yr2 { font-size: 12px; font-weight: 700; fill: #0d1526; }
+    .sem { font-size: 10px; fill: #7d8798; }
+    .rowlab { font-size: 12px; font-weight: 700; fill: #0d1526; }
+    .rowsub { font-size: 9.5px; fill: #7d8798; }
+    .bar { font-size: 10px; font-weight: 600; }
+    .gate { font-size: 9.5px; font-weight: 600; fill: #0d1526; }
+    .foot { font-size: 11px; fill: #46536b; }
+  </style>
+
+  <text class="h" x="40" y="28">Eight semesters, one picture</text>
+  <text class="sub" x="40" y="46">mainline D1 → D2, side tracks D3 / D4, one hedge (D5); ◆ marks the gates from the table below</text>
+
+  <!-- year + semester headers -->
+  <g class="yr2" text-anchor="middle">
+    <text x="186" y="64">Year 1</text><text x="331" y="64">Year 2</text><text x="476" y="64">Year 3</text><text x="621" y="64">Year 4</text>
+  </g>
+  <g class="sem" text-anchor="middle">
+    <text x="186" y="82">S1</text><text x="259" y="82">S2</text><text x="331" y="82">S3</text><text x="404" y="82">S4</text>
+    <text x="476" y="82">S5</text><text x="549" y="82">S6</text><text x="621" y="82">S7</text><text x="694" y="82">S8</text>
+  </g>
+
+  <!-- grid -->
+  <g stroke="#e4e8ee" stroke-width="1">
+    <line x1="150" y1="56" x2="150" y2="356"/><line x1="222.5" y1="56" x2="222.5" y2="356"/><line x1="295" y1="56" x2="295" y2="356"/><line x1="367.5" y1="56" x2="367.5" y2="356"/>
+    <line x1="440" y1="56" x2="440" y2="356"/><line x1="512.5" y1="56" x2="512.5" y2="356"/><line x1="585" y1="56" x2="585" y2="356"/><line x1="657.5" y1="56" x2="657.5" y2="356"/>
+    <line x1="730" y1="56" x2="730" y2="356"/>
+  </g>
+
+  <!-- row labels -->
+  <text class="rowlab" x="140" y="109" text-anchor="end">D1 · DERMS</text>
+  <text class="rowsub" x="140" y="122" text-anchor="end">mainline</text>
+  <text class="rowlab" x="140" y="151" text-anchor="end">D2 · TEP / planning</text>
+  <text class="rowsub" x="140" y="164" text-anchor="end">mainline</text>
+  <text class="rowlab" x="140" y="193" text-anchor="end">D3 · GPU UC</text>
+  <text class="rowsub" x="140" y="206" text-anchor="end">side</text>
+  <text class="rowlab" x="140" y="235" text-anchor="end">D4 · multi-GPU SCOPF</text>
+  <text class="rowsub" x="140" y="248" text-anchor="end">side</text>
+  <text class="rowlab" x="140" y="277" text-anchor="end">D5 · ML-assisted</text>
+  <text class="rowsub" x="140" y="290" text-anchor="end">hedge</text>
+
+  <!-- bars -->
+  <rect x="222.5" y="103" width="217.5" height="20" rx="6" fill="#0d1526"/>
+  <text class="bar" x="331" y="116" text-anchor="middle" fill="#ffffff">S2 start · S3 system · S4 paper 2</text>
+  <rect x="367.5" y="145" width="217.5" height="20" rx="6" fill="#0d1526"/>
+  <text class="bar" x="476" y="158" text-anchor="middle" fill="#ffffff">S4 literature · S5 prototype · S6 paper 3</text>
+  <rect x="440" y="187" width="217.5" height="20" rx="6" fill="#f59e0b"/>
+  <text class="bar" x="548" y="200" text-anchor="middle" fill="#0d1526">side: end-to-end GPU UC (D3)</text>
+  <rect x="440" y="229" width="217.5" height="20" rx="6" fill="#f59e0b"/>
+  <text class="bar" x="548" y="242" text-anchor="middle" fill="#0d1526">side: multi-GPU SCOPF characterization</text>
+  <rect x="367.5" y="271" width="217.5" height="20" rx="6" fill="none" stroke="#7d8798" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text class="bar" x="476" y="284" text-anchor="middle" fill="#7d8798">hedge — only if D1–D4 stall (S3–S4)</text>
+
+  <!-- gates -->
+  <line x1="150" y1="320" x2="730" y2="320" stroke="#e4e8ee" stroke-width="1.5"/>
+  <text class="rowsub" x="140" y="324" text-anchor="end">gates</text>
+  <g fill="#f59e0b" stroke="#0d1526" stroke-width="1">
+    <polygon points="222.5,313 229,320 222.5,327 216,320"/>
+    <polygon points="295,313 301.5,320 295,327 288.5,320"/>
+    <polygon points="367.5,313 374,320 367.5,327 361,320"/>
+    <polygon points="512.5,313 519,320 512.5,327 506,320"/>
+  </g>
+  <g class="gate" text-anchor="middle">
+    <text x="222.5" y="344">kernel ≥10×</text>
+    <text x="295" y="344">paper 1 out</text>
+    <text x="367.5" y="344">beat D04/D05</text>
+    <text x="512.5" y="344">TEP end-to-end</text>
+  </g>
+
+  <text class="foot" x="40" y="372">Side tracks run in parallel in Y3–Y4; the capstone (S7) fuses D1 + D4 into one open-source system, and S8 is the defense.</text>
+  <text class="foot" x="40" y="388">If a gate fails, the table below says what happens — the plan is built to survive its own failures.</text>
+</svg>

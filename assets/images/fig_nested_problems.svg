@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img" aria-labelledby="t d">
+  <title id="t">Three nested grid problems</title>
+  <desc id="d">Nested boxes: planning (years, investment) contains security (N-1, minutes to hours), which contains dispatch (power flow and OPF, seconds to hours). A vertical arrow on the right marks the time scale from years down to seconds.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .ph { font-size: 13.5px; font-weight: 700; fill: #0d1526; }
+    .xs { font-size: 10.5px; fill: #7d8798; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <text class="h" x="40" y="28">Three nested problems</text>
+  <text class="sub" x="40" y="46">each layer contains the one inside it</text>
+
+  <!-- planning (outer) -->
+  <rect x="40" y="64" width="540" height="272" rx="12" fill="#eef2f7" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="ph" x="60" y="94">PLANNING — what to build</text>
+  <text class="sub" x="60" y="112">5–30 years · investment LP / MILP, TEP, NPC (Sec. 8)</text>
+
+  <!-- security (middle) -->
+  <rect x="80" y="128" width="460" height="156" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="ph" x="100" y="158">SECURITY — does it survive N-1</text>
+  <text class="sub" x="100" y="176">seconds–hours · SCOPF / SCUC, N-1 constraints (Sec. 6)</text>
+
+  <!-- dispatch (inner) -->
+  <rect x="120" y="192" width="380" height="72" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+  <text class="ph" x="140" y="220">DISPATCH — cheapest feasible operation</text>
+  <text class="sub" x="140" y="238">seconds–hours · power flow + OPF (Sec. 3, 5)</text>
+
+  <!-- time-scale arrow -->
+  <line x1="620" y1="84" x2="620" y2="316" stroke="#7d8798" stroke-width="1.5"/>
+  <polygon points="614,314 626,314 620,326" fill="#7d8798"/>
+  <line x1="615" y1="100" x2="625" y2="100" stroke="#7d8798" stroke-width="1.5"/>
+  <line x1="615" y1="200" x2="625" y2="200" stroke="#7d8798" stroke-width="1.5"/>
+  <line x1="615" y1="300" x2="625" y2="300" stroke="#7d8798" stroke-width="1.5"/>
+  <text class="xs" x="634" y="104">years</text>
+  <text class="xs" x="634" y="204">minutes</text>
+  <text class="xs" x="634" y="304">seconds</text>
+  <text class="xs" x="600" y="200" text-anchor="middle" transform="rotate(-90 600 200)">time scale</text>
+
+  <text class="foot" x="40" y="372">Every layer is the same computational shape — sparse, iterative, replicated — which is why all three land in the GPU regimes of 03.</text>
+</svg>

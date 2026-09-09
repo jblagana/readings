@@ -185,3 +185,82 @@ When a paper says "we achieved 25× speedup on GPU", check **all** of:
 
 Items 1–3 + 7 are exactly what `03_gpu_grid_optimization_review.md` grades
 each paper on — and what your own thesis must do.
+
+<div class="widget cg" id="cg-root">
+  <span class="widget-badge">Interactive</span>
+  <p class="widget-title">Grade a speedup claim</p>
+  <p class="widget-sub">Open the paper's benchmark section and tick each item as you find it. Items 1–3 and 7 are load-bearing — the verdict says what to do with the number.</p>
+  <ol class="cg-items">
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">1</span><span class="cg-q">Baseline — single CPU core, or a tuned multithreaded library? Same machine?</span></div>
+      <p class="cg-why">25× vs 1 core is very different from 25× vs a 64-core PARDISO.</p>
+      <div class="cg-seg" data-item="1">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">2</span><span class="cg-q">What fraction was parallelized — SpMV only, or the whole solve including factorization?</span></div>
+      <p class="cg-why">If factorization is 60% of CPU time and stays serial, Amdahl caps the honest claim at 2.5× (02 §1).</p>
+      <div class="cg-seg" data-item="2">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">3</span><span class="cg-q">Problem size &amp; instance — IEEE 30-bus, or 10k/100k-bus? Total wall time, not per-iteration?</span></div>
+      <p class="cg-why">Small-bus speedups are often launch overhead wearing a costume (02, kernel 03).</p>
+      <div class="cg-seg" data-item="3">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">4</span><span class="cg-q">Transfer + launch overhead included, or hidden?</span></div>
+      <p class="cg-why">Once H2D/D2H copies are counted honestly, small problems often lose.</p>
+      <div class="cg-seg" data-item="4">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">5</span><span class="cg-q">Precision — FP64, or FP32 with the accuracy loss vs an FP64 reference reported?</span></div>
+      <p class="cg-why">Power systems need double precision for convergence; FP32 speedups are a different result.</p>
+      <div class="cg-seg" data-item="5">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">6</span><span class="cg-q">Reproducibility — open code + data?</span></div>
+      <p class="cg-why">You should be able to re-run the number, not just re-read it.</p>
+      <div class="cg-seg" data-item="6">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+    <li class="cg-item">
+      <div class="cg-item-head"><span class="cg-num">7</span><span class="cg-q">Correctness check — GPU solution verified against a CPU reference (residual, objective gap)?</span></div>
+      <p class="cg-why">If a paper never shows a "GPU result == CPU result" number, the speedup is meaningless.</p>
+      <div class="cg-seg" data-item="7">
+        <button type="button" data-state="pass" aria-pressed="false">Yes</button>
+        <button type="button" data-state="na" aria-pressed="false">Not stated</button>
+        <button type="button" data-state="fail" aria-pressed="false">Red flag</button>
+      </div>
+    </li>
+  </ol>
+  <div class="cg-score" aria-hidden="true">
+    <span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span><span class="cg-score-cell is-none"></span>
+  </div>
+  <div class="cg-verdict is-none" id="cg-verdict">
+    <span class="cg-verdict-title">Ungraded</span>
+    <p class="cg-verdict-text">Tick the seven items — the verdict updates live.</p>
+  </div>
+  <button type="button" class="cg-reset" id="cg-reset">Reset</button>
+</div>

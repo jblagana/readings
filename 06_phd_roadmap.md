@@ -25,6 +25,11 @@ Everything below either serves that sentence or is explicitly a hedge
 
 ## 1. Semester-by-semester plan
 
+<figure class="rdiagram">
+  <img src="{{ '/assets/images/fig_semester_gantt.svg' | relative_url }}" alt="An eight-semester Gantt chart: navy mainline bars D1 (S2–S4) and D2 (S4–S6), amber side bars D3 and D4 (S5–S7), a dashed D5 hedge bar (S4–S6), and four amber diamond gates at the ends of S1, S2, S3 and S5" width="760">
+  <figcaption>The whole plan at a glance: D1 (DERMS) then D2 (TEP) are the mainline; D3/D4 run in parallel as side tracks in Year 3; D5 is a dashed hedge that only starts if the mainline stalls. The diamonds are the gates below — miss one and the plan has a written fallback.</figcaption>
+</figure>
+
 ### Year 1 — foundations + first honest result
 **Semester 1 (Aug–Dec):**
 - Courses: optimization (interior-point methods, duality), power-system

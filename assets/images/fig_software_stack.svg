@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" role="img" aria-labelledby="t d">
+  <title id="t">The software stack for GPU grid optimization</title>
+  <desc id="d">Four stacked layers with tool chips: problem layer (MATPOWER, PyPSA, PowerModels.jl, GridCal, PGLib-OPF data), modeling layer (PuLP/Pyomo, PowerModels, CasADi, AMPL), solver layer (HiGHS, Gurobi, CPLEX, IPOPT, MOSEK), and a navy HPC/GPU layer (CUDA, cuBLAS/cuSPARSE/cuSOLVER, PyTorch/JAX/CuPy, NVIDIA cuOpt) marked as where this package builds.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .layer { font-size: 12.5px; font-weight: 700; fill: #0d1526; }
+    .layera { font-size: 12.5px; font-weight: 700; fill: #f59e0b; }
+    .chip { font-size: 11px; font-weight: 600; fill: #0d1526; }
+    .chipdark { font-size: 11px; font-weight: 600; fill: #e8edf6; }
+    .flow { font-size: 10.5px; font-style: italic; fill: #7d8798; }
+    .subm { font-size: 11px; fill: #b9c4d6; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <text class="h" x="40" y="28">The software stack you will actually touch</text>
+  <text class="sub" x="40" y="46">Four layers — this package builds in the bottom one</text>
+
+  <!-- problem layer -->
+  <rect x="150" y="64" width="590" height="84" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="layer" x="40" y="102">problem</text>
+  <text class="sub" x="40" y="118">layer</text>
+  <g fill="#ffffff" stroke="#0d1526" stroke-width="1.2">
+    <rect x="166" y="78" width="70" height="24" rx="12"/>
+    <rect x="246" y="78" width="51" height="24" rx="12"/>
+    <rect x="307" y="78" width="107" height="24" rx="12"/>
+    <rect x="424" y="78" width="63" height="24" rx="12"/>
+    <rect x="497" y="78" width="107" height="24" rx="12"/>
+  </g>
+  <g class="chip" text-anchor="middle">
+    <text x="201" y="94">MATPOWER</text>
+    <text x="272" y="94">PyPSA</text>
+    <text x="360" y="94">PowerModels.jl</text>
+    <text x="455" y="94">GridCal</text>
+    <text x="550" y="94">PGLib-OPF data</text>
+  </g>
+  <text class="sub" x="166" y="132">physics + data: where the matrices come from</text>
+
+  <!-- modeling layer -->
+  <rect x="150" y="158" width="590" height="84" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="layer" x="40" y="196">modeling</text>
+  <text class="sub" x="40" y="212">layer</text>
+  <g fill="#ffffff" stroke="#0d1526" stroke-width="1.2">
+    <rect x="166" y="172" width="144" height="24" rx="12"/>
+    <rect x="320" y="172" width="132" height="24" rx="12"/>
+    <rect x="462" y="172" width="57" height="24" rx="12"/>
+    <rect x="529" y="172" width="45" height="24" rx="12"/>
+  </g>
+  <g class="chip" text-anchor="middle">
+    <text x="238" y="188">PuLP / Pyomo (Python)</text>
+    <text x="386" y="188">PowerModels (Julia)</text>
+    <text x="490" y="188">CasADi</text>
+    <text x="551" y="188">AMPL</text>
+  </g>
+  <text class="sub" x="166" y="226">turn physics into LP / NLP / MILP objects</text>
+
+  <!-- solver layer -->
+  <rect x="150" y="252" width="590" height="84" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="layer" x="40" y="290">solver</text>
+  <text class="sub" x="40" y="306">layer</text>
+  <g fill="#ffffff" stroke="#0d1526" stroke-width="1.2">
+    <rect x="166" y="266" width="51" height="24" rx="12"/>
+    <rect x="227" y="266" width="57" height="24" rx="12"/>
+    <rect x="294" y="266" width="51" height="24" rx="12"/>
+    <rect x="355" y="266" width="51" height="24" rx="12"/>
+    <rect x="416" y="266" width="51" height="24" rx="12"/>
+  </g>
+  <g class="chip" text-anchor="middle">
+    <text x="191" y="282">HiGHS</text>
+    <text x="255" y="282">Gurobi</text>
+    <text x="319" y="282">CPLEX</text>
+    <text x="380" y="282">IPOPT</text>
+    <text x="441" y="282">MOSEK</text>
+  </g>
+  <text class="sub" x="166" y="320">CPU solvers — increasingly shipping GPU backends</text>
+
+  <!-- HPC / GPU layer -->
+  <rect x="150" y="346" width="590" height="96" rx="10" fill="#0d1526"/>
+  <text class="layera" x="40" y="390">HPC / GPU</text>
+  <text class="subm" x="40" y="406">layer</text>
+  <g fill="#1e2a44" stroke="#3b4a6b" stroke-width="1.2">
+    <rect x="166" y="360" width="156" height="24" rx="12"/>
+    <rect x="332" y="360" width="187" height="24" rx="12"/>
+    <rect x="166" y="392" width="144" height="24" rx="12"/>
+    <rect x="320" y="392" width="94" height="24" rx="12"/>
+  </g>
+  <g class="chipdark" text-anchor="middle">
+    <text x="244" y="376">CUDA C/C++ (raw kernels)</text>
+    <text x="425" y="376">cuBLAS / cuSPARSE / cuSOLVER</text>
+    <text x="238" y="408">PyTorch / JAX / CuPy</text>
+    <text x="367" y="408">NVIDIA cuOpt</text>
+  </g>
+  <text class="subm" x="166" y="432">where this package builds — kernels 01–03 sit here</text>
+
+  <!-- flow labels -->
+  <text class="flow" x="735" y="155" text-anchor="end">formulate</text>
+  <text class="flow" x="735" y="249" text-anchor="end">hand off</text>
+  <text class="flow" x="735" y="343" text-anchor="end">accelerate</text>
+
+  <text class="foot" x="380" y="462" text-anchor="middle">Never hand-write a kernel for a standard operation — cuSPARSE / cuSOLVER / cuBLAS are tuned for years.</text>
+</svg>

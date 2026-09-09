@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="t d">
+  <title id="t">Ybus sparsity pattern</title>
+  <desc id="d">A five-bus network with six lines on the left, and on the right its five-by-five admittance matrix: navy diagonal entries, amber entries only where lines connect buses, faint dots for zeros. The non-zero pattern is the CSR array a SpMV kernel streams.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .lab { font-size: 12px; fill: #46536b; }
+    .node { font-size: 12px; font-weight: 700; fill: #0d1526; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <text class="h" x="40" y="28">Ybus: sparse by construction</text>
+  <text class="sub" x="40" y="46">each line adds y to the diagonal and −y to two off-diagonals</text>
+
+  <!-- network -->
+  <g stroke="#46536b" stroke-width="2">
+    <line x1="90" y1="84" x2="230" y2="64"/>
+    <line x1="90" y1="84" x2="84" y2="208"/>
+    <line x1="230" y1="64" x2="300" y2="150"/>
+    <line x1="230" y1="64" x2="200" y2="244"/>
+    <line x1="300" y1="150" x2="200" y2="244"/>
+    <line x1="200" y1="244" x2="84" y2="208"/>
+  </g>
+  <g fill="#ffffff" stroke="#0d1526" stroke-width="2">
+    <circle cx="90" cy="84" r="16"/>
+    <circle cx="230" cy="64" r="16"/>
+    <circle cx="300" cy="150" r="16"/>
+    <circle cx="200" cy="244" r="16"/>
+    <circle cx="84" cy="208" r="16"/>
+  </g>
+  <text class="node" x="90" y="88" text-anchor="middle">1</text>
+  <text class="node" x="230" y="68" text-anchor="middle">2</text>
+  <text class="node" x="300" y="154" text-anchor="middle">3</text>
+  <text class="node" x="200" y="248" text-anchor="middle">4</text>
+  <text class="node" x="84" y="212" text-anchor="middle">5</text>
+  <text class="sub" x="40" y="300">5×5 = 25 slots, 17 filled (68%)</text>
+  <text class="sub" x="40" y="316">at 10⁴ buses, less than 1% of slots stay filled</text>
+
+  <!-- matrix -->
+  <g stroke="#e4e8ee" stroke-width="1">
+    <rect x="430" y="64" width="40" height="40"/><rect x="470" y="64" width="40" height="40"/><rect x="510" y="64" width="40" height="40"/><rect x="550" y="64" width="40" height="40"/><rect x="590" y="64" width="40" height="40"/>
+    <rect x="430" y="104" width="40" height="40"/><rect x="470" y="104" width="40" height="40"/><rect x="510" y="104" width="40" height="40"/><rect x="550" y="104" width="40" height="40"/><rect x="590" y="104" width="40" height="40"/>
+    <rect x="430" y="144" width="40" height="40"/><rect x="470" y="144" width="40" height="40"/><rect x="510" y="144" width="40" height="40"/><rect x="550" y="144" width="40" height="40"/><rect x="590" y="144" width="40" height="40"/>
+    <rect x="430" y="184" width="40" height="40"/><rect x="470" y="184" width="40" height="40"/><rect x="510" y="184" width="40" height="40"/><rect x="550" y="184" width="40" height="40"/><rect x="590" y="184" width="40" height="40"/>
+    <rect x="430" y="224" width="40" height="40"/><rect x="470" y="224" width="40" height="40"/><rect x="510" y="224" width="40" height="40"/><rect x="550" y="224" width="40" height="40"/><rect x="590" y="224" width="40" height="40"/>
+  </g>
+  <g class="lab" text-anchor="middle">
+    <text x="450" y="56">1</text><text x="490" y="56">2</text><text x="530" y="56">3</text><text x="570" y="56">4</text><text x="610" y="56">5</text>
+  </g>
+  <g class="lab" text-anchor="end">
+    <text x="420" y="88">1</text><text x="420" y="128">2</text><text x="420" y="168">3</text><text x="420" y="208">4</text><text x="420" y="248">5</text>
+  </g>
+  <!-- zeros -->
+  <g fill="#cfd8e3">
+    <circle cx="530" cy="84" r="3"/><circle cx="570" cy="84" r="3"/>
+    <circle cx="610" cy="124" r="3"/>
+    <circle cx="450" cy="164" r="3"/><circle cx="610" cy="164" r="3"/>
+    <circle cx="450" cy="204" r="3"/>
+    <circle cx="490" cy="244" r="3"/><circle cx="530" cy="244" r="3"/>
+  </g>
+  <!-- off-diagonal: the six lines, mirrored -->
+  <g fill="#f59e0b">
+    <circle cx="490" cy="84" r="8"/><circle cx="450" cy="124" r="8"/>
+    <circle cx="610" cy="84" r="8"/><circle cx="450" cy="244" r="8"/>
+    <circle cx="530" cy="124" r="8"/><circle cx="490" cy="164" r="8"/>
+    <circle cx="570" cy="124" r="8"/><circle cx="490" cy="204" r="8"/>
+    <circle cx="570" cy="164" r="8"/><circle cx="530" cy="204" r="8"/>
+    <circle cx="610" cy="204" r="8"/><circle cx="570" cy="244" r="8"/>
+  </g>
+  <!-- diagonal -->
+  <g fill="#0d1526">
+    <circle cx="450" cy="84" r="8"/><circle cx="490" cy="124" r="8"/><circle cx="530" cy="164" r="8"/><circle cx="570" cy="204" r="8"/><circle cx="610" cy="244" r="8"/>
+  </g>
+  <text class="sub" x="430" y="290">the amber pairs are the 6 lines, mirrored —</text>
+  <text class="sub" x="430" y="306">this pattern is the CSR array the 02 kernel</text>
+  <text class="sub" x="430" y="322">streams: one thread per row, coalesced.</text>
+
+  <text class="foot" x="380" y="348" text-anchor="middle">Sparsity is the seed of everything GPU-related in this field (02 §4).</text>
+</svg>

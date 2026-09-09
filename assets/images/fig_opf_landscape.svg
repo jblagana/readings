@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" role="img" aria-labelledby="t d">
+  <title id="t">DC-OPF versus AC-OPF objective landscape</title>
+  <desc id="d">Left panel: a single smooth bowl with one minimum, labelled DC-OPF, convex, globally optimal. Right panel: a wavy non-convex landscape with local minima and a marked global minimum, labelled AC-OPF, non-convex. Convex relaxations and DC linearization carve a solvable bowl out of the bumpy landscape.</desc>
+  <style>
+    text { font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+    .h { font-size: 15px; font-weight: 700; fill: #0d1526; }
+    .sub { font-size: 11.5px; fill: #46536b; }
+    .ph { font-size: 13.5px; font-weight: 700; fill: #0d1526; }
+    .xs { font-size: 10.5px; fill: #7d8798; }
+    .min { font-size: 11.5px; font-weight: 700; fill: #0d1526; }
+    .foot { font-size: 12px; fill: #46536b; }
+  </style>
+
+  <text class="h" x="40" y="28">One picture of the subfield's central fact</text>
+  <text class="sub" x="40" y="46">DC-OPF linearizes AC-OPF — a bowl versus a landscape</text>
+
+  <!-- DC panel -->
+  <rect x="30" y="64" width="330" height="252" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="ph" x="50" y="92">DC-OPF — convex (LP)</text>
+  <path d="M60,140 Q195,330 330,140" fill="none" stroke="#0d1526" stroke-width="2.5"/>
+  <circle cx="195" cy="235" r="6" fill="#f59e0b" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="min" x="195" y="264" text-anchor="middle">one minimum — globally optimal</text>
+  <text class="xs" x="195" y="284" text-anchor="middle">linearized physics: fast, but blind to Q and voltage</text>
+
+  <!-- AC panel -->
+  <rect x="400" y="64" width="330" height="252" rx="10" fill="#f8fafc" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="ph" x="420" y="92">AC-OPF — non-convex (NLP)</text>
+  <path d="M430,160 C445,210 455,250 470,252 C490,255 498,165 510,158 C525,149 538,200 550,208 C564,217 578,140 590,138 C610,135 625,282 640,286 C660,291 685,165 700,158" fill="none" stroke="#0d1526" stroke-width="2.5"/>
+  <circle cx="470" cy="252" r="4.5" fill="#7d8798"/>
+  <circle cx="550" cy="208" r="4.5" fill="#7d8798"/>
+  <text class="xs" x="430" y="292">local minima can look converged</text>
+  <circle cx="640" cy="286" r="6" fill="#f59e0b" stroke="#0d1526" stroke-width="1.5"/>
+  <text class="min" x="700" y="308" text-anchor="end">global minimum — where solvers should land</text>
+
+  <text class="foot" x="40" y="348">Convex relaxations (SOC, SDP) and DC linearization carve a solvable bowl out of the bumpy landscape — sometimes tight, sometimes not.</text>
+</svg>
